@@ -11,6 +11,14 @@ public class ProgramStatusResponse {
     private final String errorMessage;
     private final Date submittedDate;
 
+    public static final int PROGRAM_NOT_FOUND = 0;
+    public static final int PROGRAM_IN_QUEUE_FOR_COMPILATION = 1;
+    public static final int PROGRAM_IS_GETTING_PROCESSED = 2;
+    public static final int PROGRAM_COMPILATION_ERROR = 3;
+    public static final int PROGRAM_EXECUTION_TIMEOUT = 4;
+    public static final int PROGRAM_RUNTIME_ERROR = 5;
+    public static final int PROGRAM_RAN_SUCCESSFULLY = 6;
+
     public ProgramStatusResponse(int programStatus, String output, String errorMessage, Date submittedDate) {
         this.programStatus = programStatus;
         this.output = output;

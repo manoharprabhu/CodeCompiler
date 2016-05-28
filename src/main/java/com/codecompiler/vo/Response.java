@@ -6,18 +6,12 @@ import java.util.Date;
  * Created by Manohar Prabhu on 5/28/2016.
  */
 public class Response<T> {
-    private final int responseCode;
     private final Date timestamp;
     private final T data;
 
-    public Response(int responseCode, Date timestamp, T data) {
-        this.responseCode = responseCode;
+    public Response(Date timestamp, T data) {
         this.timestamp = timestamp;
         this.data = data;
-    }
-
-    public int getResponseCode() {
-        return responseCode;
     }
 
     public Date getTimestamp() {
@@ -30,6 +24,6 @@ public class Response<T> {
 
     @SuppressWarnings("unchecked")
     public static Response createEmptyResponse() {
-        return new Response(200, new Date(), null);
+        return new Response(new Date(), null);
     }
 }

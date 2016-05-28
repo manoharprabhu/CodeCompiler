@@ -15,20 +15,14 @@ public class CodeCompilerController {
     @Autowired
     private CodeCompilerService codeCompilerService;
 
-    public CodeCompilerController(CodeCompilerService codeCompilerService) {
-        this.codeCompilerService = codeCompilerService;
-    }
-
-    public CodeCompilerController() {}
-
     @RequestMapping(method = RequestMethod.POST, path = "/submit")
     public Response submitProgram(@RequestBody String program, @RequestBody String input) {
         return codeCompilerService.submitProgram(program, input);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/status")
-    public Response checkProgramStatus(@RequestParam String programId) {
-        return codeCompilerService.checkProgramStatus(programId);
+    public Response checkProgramStatus(@RequestParam String queueId) {
+        return codeCompilerService.checkProgramStatus(queueId);
     }
 
 }
