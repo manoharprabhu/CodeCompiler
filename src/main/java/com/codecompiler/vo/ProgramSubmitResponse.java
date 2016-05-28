@@ -1,4 +1,4 @@
-package com.codecompiler;
+package com.codecompiler.vo;
 
 /**
  * Created by Manohar Prabhu on 5/28/2016.

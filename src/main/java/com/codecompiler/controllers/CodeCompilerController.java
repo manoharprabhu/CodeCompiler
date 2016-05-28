@@ -1,8 +1,8 @@
 package com.codecompiler.controllers;
 
-import com.codecompiler.ProgramStatusResponse;
-import com.codecompiler.ProgramSubmitResponse;
-import com.codecompiler.Response;
+import com.codecompiler.services.CodeCompilerService;
+import com.codecompiler.vo.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,14 +12,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/codecompiler")
 public class CodeCompilerController {
 
+    @Autowired
+    private CodeCompilerService codeCompilerService;
+
+    public CodeCompilerController(CodeCompilerService codeCompilerService) {
+        this.codeCompilerService = codeCompilerService;
+    }
+
+    public CodeCompilerController() {}
+
     @RequestMapping(method = RequestMethod.POST, path = "/submit")
-    public Response submitProgram(@RequestBody String program, @RequestBody String imput) {
-        return Response.createEmptyResponse();
+    public Response submitProgram(@RequestBody String program, @RequestBody String input) {
+        return codeCompilerService.submitProgram(program, input);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/status")
     public Response checkProgramStatus(@RequestParam String programId) {
-        return Response.createEmptyResponse();
+        return codeCompilerService.checkProgramStatus(programId);
     }
 
 }
