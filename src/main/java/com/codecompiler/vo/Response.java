@@ -9,8 +9,8 @@ public class Response<T> {
     private final Date timestamp;
     private final T data;
 
-    public Response(Date timestamp, T data) {
-        this.timestamp = timestamp;
+    public Response(T data) {
+        this.timestamp = new Date();
         this.data = data;
     }
 
@@ -24,6 +24,6 @@ public class Response<T> {
 
     @SuppressWarnings("unchecked")
     public static Response createEmptyResponse() {
-        return new Response(new Date(), null);
+        return new Response(null);
     }
 }
