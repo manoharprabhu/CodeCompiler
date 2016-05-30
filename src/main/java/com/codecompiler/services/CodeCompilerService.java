@@ -17,13 +17,13 @@ import java.util.Date;
 @Service
 public class CodeCompilerService {
 
-    @Autowired
     private ProgramRepository programRepository;
 
     public CodeCompilerService() {
 
     }
 
+    @Autowired
     public CodeCompilerService(ProgramRepository programRepository) {
         this.programRepository = programRepository;
     }
