@@ -17,10 +17,9 @@ public class Application {
     private static Logger logger = Logger.getLogger(Application.class.toString());
 
     public static void main(String[] args) {
-        ProgramArguments arguments = new ProgramArguments();
-        CmdLineParser parser = new CmdLineParser(arguments);
+        ProgramArguments arguments = null;
         try {
-            parser.parseArgument(args);
+            arguments = parseArguments(args);
         } catch(CmdLineException e) {
             logger.info("Error while parsing the arguments");
             logger.info(e.getLocalizedMessage());
@@ -31,6 +30,13 @@ public class Application {
         MongoConfiguration.HOST = arguments.mongodbHost;
 
        SpringApplication.run(Application.class, args);
+    }
+
+    public static ProgramArguments parseArguments(String[] args) throws CmdLineException {
+        ProgramArguments arguments = new ProgramArguments();
+        CmdLineParser parser = new CmdLineParser(arguments);
+        parser.parseArgument(args);
+        return arguments;
     }
 
 }
