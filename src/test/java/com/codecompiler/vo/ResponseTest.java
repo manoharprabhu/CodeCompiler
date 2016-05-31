@@ -27,12 +27,14 @@ public class ResponseTest {
 
     @Test
     public void testResponseFields() {
-        Date date = new Date();
-        Response<ProgramStatusResponse> programStatusResponseResponse = new Response<ProgramStatusResponse>(new ProgramStatusResponse(0, "output", "error", date));
+        Date date1 = new Date();
+        Response<ProgramStatusResponse> programStatusResponseResponse = new Response<ProgramStatusResponse>(new ProgramStatusResponse(0, "output", "error", date1));
+        Date date2 = new Date();
         Assert.assertEquals(ProgramStatusResponse.PROGRAM_NOT_FOUND, programStatusResponseResponse.getData().getProgramStatus());
         Assert.assertEquals("output", programStatusResponseResponse.getData().getOutput());
         Assert.assertEquals("error", programStatusResponseResponse.getData().getErrorMessage());
-        Assert.assertEquals(date, programStatusResponseResponse.getData().getSubmittedDate());
+        Assert.assertEquals(date1, programStatusResponseResponse.getData().getSubmittedDate());
+        Assert.assertTrue(date1.getTime() <= programStatusResponseResponse.getTimestamp().getTime() && programStatusResponseResponse.getTimestamp().getTime() <= date2.getTime());
     }
 
     @Test

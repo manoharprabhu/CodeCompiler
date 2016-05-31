@@ -28,8 +28,7 @@ public class Application {
 
         MongoConfiguration.DATABASE_NAME = arguments.mongodbDatabase;
         MongoConfiguration.HOST = arguments.mongodbHost;
-
-       SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     public static ProgramArguments parseArguments(String[] args) throws CmdLineException {
@@ -38,5 +37,4 @@ public class Application {
         parser.parseArgument(args);
         return arguments;
     }
-
 }
