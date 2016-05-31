@@ -31,23 +31,19 @@ public class CodeCompilerService {
     public Response<ProgramSubmitResponse> submitProgram(String program, String input) {
         ProgramEntity programEntity = new ProgramEntity();
         ProgramSubmitResponse response;
-        try {
-            String uniqueId = generateUniqueID();
-            programEntity.setProgram(program);
-            programEntity.setInput(input);
-            programEntity.setExecutionTimeLimit(2);
-            programEntity.setQueuedTime(new Date());
-            programEntity.setQueueId(uniqueId);
-            getProgramRepository().save(programEntity);
-            response = new ProgramSubmitResponse(uniqueId);
-        } catch (Exception e) {
-            response = new ProgramSubmitResponse(null);
-        }
+        String uniqueId = generateUniqueID();
+        programEntity.setProgram(program);
+        programEntity.setInput(input);
+        programEntity.setExecutionTimeLimit(2);
+        programEntity.setQueuedTime(new Date());
+        programEntity.setQueueId(uniqueId);
+        programRepository.save(programEntity);
+        response = new ProgramSubmitResponse(uniqueId);
         return new Response<ProgramSubmitResponse>(response);
     }
 
     public Response<ProgramStatusResponse> checkProgramStatus(String queueId) {
-        ProgramEntity programEntity = getProgramRepository().findByQueueId(queueId);
+        ProgramEntity programEntity = programRepository.findByQueueId(queueId);
         ProgramStatusResponse response;
         if(programEntity == null) {
             response = new ProgramStatusResponse(ProgramStatusResponse.PROGRAM_NOT_FOUND, null, "Program not found", null);
@@ -62,11 +58,4 @@ public class CodeCompilerService {
         return new BigInteger(130, random).toString();
     }
 
-    public ProgramRepository getProgramRepository() {
-        return programRepository;
-    }
-
-    public void setProgramRepository(ProgramRepository programRepository) {
-        this.programRepository = programRepository;
-    }
 }

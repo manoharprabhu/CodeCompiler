@@ -2,6 +2,7 @@ package com.codecompiler.services;
 
 import com.codecompiler.vo.ProgramEntity;
 import com.codecompiler.vo.ProgramStatusResponse;
+import com.codecompiler.vo.ProgramSubmitResponse;
 import com.codecompiler.vo.Response;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,10 +42,25 @@ public class CodeCompilerServiceTest {
     }
 
     @Test
+    public void testGenerateUniqueId() {
+        String uniqueId1 = codeCompilerService.generateUniqueID();
+        String uniqueId2 = codeCompilerService.generateUniqueID();
+
+        Assert.assertNotEquals(uniqueId1, uniqueId2);
+    }
+
+    @Test
     public void testInvalidCheckProgramStatus() {
         Response<ProgramStatusResponse> response = codeCompilerService.checkProgramStatus("0");
         Assert.assertEquals(response.getData().getProgramStatus(), ProgramStatusResponse.PROGRAM_NOT_FOUND);
     }
+
+    @Test
+    public void testSubmitProgram() {
+        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input");
+        Assert.assertNotNull(response.getData());
+    }
+
 
     private ProgramEntity mockProgramEntity() {
         ProgramEntity programEntity = new ProgramEntity();
