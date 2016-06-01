@@ -16,19 +16,15 @@ import java.util.logging.Logger;
 public class Application {
     private static Logger logger = Logger.getLogger(Application.class.toString());
 
-    public static void main(String[] args) {
-        ProgramArguments arguments = null;
-        try {
-            arguments = parseArguments(args);
-        } catch(CmdLineException e) {
-            logger.info("Error while parsing the arguments");
-            logger.info(e.getLocalizedMessage());
-            System.exit(1);
-        }
+    public static void main(String[] args) throws CmdLineException {
+        ProgramArguments arguments = parseArguments(args);
+        setProgramParameters(arguments);
+        SpringApplication.run(Application.class, args);
+    }
 
+    public static void setProgramParameters(ProgramArguments arguments) {
         MongoConfiguration.DATABASE_NAME = arguments.mongodbDatabase;
         MongoConfiguration.HOST = arguments.mongodbHost;
-        SpringApplication.run(Application.class, args);
     }
 
     public static ProgramArguments parseArguments(String[] args) throws CmdLineException {
