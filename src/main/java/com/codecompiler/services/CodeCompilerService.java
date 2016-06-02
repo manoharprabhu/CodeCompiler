@@ -1,9 +1,12 @@
 package com.codecompiler.services;
 
+import com.codecompiler.configuration.RabbitMQConfiguration;
 import com.codecompiler.vo.ProgramEntity;
 import com.codecompiler.vo.ProgramStatusResponse;
 import com.codecompiler.vo.ProgramSubmitResponse;
 import com.codecompiler.vo.Response;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
@@ -21,14 +24,16 @@ public class CodeCompilerService {
 
     Logger logger = Logger.getLogger(Logger.class.toString());
     private ProgramRepository programRepository;
+    private RabbitTemplate rabbitTemplate;
 
     public CodeCompilerService() {
 
     }
 
     @Autowired
-    public CodeCompilerService(ProgramRepository programRepository) {
+    public CodeCompilerService(ProgramRepository programRepository, RabbitTemplate rabbitTemplate) {
         this.programRepository = programRepository;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     public Response<ProgramSubmitResponse> submitProgram(String program, String input) {
@@ -42,9 +47,12 @@ public class CodeCompilerService {
         programEntity.setQueueId(uniqueId);
         try {
             programRepository.save(programEntity);
+            rabbitTemplate.convertAndSend(RabbitMQConfiguration.QUEUE_NAME, uniqueId);
             response = new ProgramSubmitResponse(uniqueId);
         } catch(DataAccessResourceFailureException e) {
             logger.info("Database seems to be down: " + e.getLocalizedMessage());
+        } catch (AmqpException e) {
+            logger.info("Messaging queue seems to be down: " + e.getLocalizedMessage());
         }
         return new Response<ProgramSubmitResponse>(response);
     }

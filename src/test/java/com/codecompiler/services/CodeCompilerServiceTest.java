@@ -1,5 +1,6 @@
 package com.codecompiler.services;
 
+import com.codecompiler.configuration.RabbitMQConfiguration;
 import com.codecompiler.vo.ProgramEntity;
 import com.codecompiler.vo.ProgramStatusResponse;
 import com.codecompiler.vo.ProgramSubmitResponse;
@@ -11,6 +12,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.dao.DataAccessResourceFailureException;
 
 import java.util.Date;
 
@@ -20,12 +24,13 @@ import java.util.Date;
 @RunWith(MockitoJUnitRunner.class)
 public class CodeCompilerServiceTest {
     @Mock private ProgramRepository programRepository;
+    @Mock private RabbitTemplate rabbitTemplate;
 
     private CodeCompilerService codeCompilerService;
 
     @Before
     public void init() {
-        this.codeCompilerService = new CodeCompilerService(this.programRepository);
+        this.codeCompilerService = new CodeCompilerService(this.programRepository, this.rabbitTemplate);
         Mockito.when(programRepository.findByQueueId("1")).thenReturn(mockProgramEntity());
         Mockito.when(programRepository.findByQueueId("0")).thenReturn(null);
     }
@@ -55,6 +60,21 @@ public class CodeCompilerServiceTest {
     public void testSubmitProgram() {
         Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input");
         Assert.assertNotNull(response.getData());
+    }
+
+
+    @Test
+    public void testSubmitProgramWhenDatabaseNotRunning() {
+        Mockito.doThrow(new DataAccessResourceFailureException("Database is not up")).when(programRepository).save(Mockito.any(ProgramEntity.class));
+        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input");
+        Assert.assertNull(response.getData());
+    }
+
+    @Test
+    public void testSubmitProgramWhenMQNotRunning() {
+        Mockito.doThrow(new AmqpException("MQ is not running")).when(rabbitTemplate).convertAndSend(Mockito.anyString(), Mockito.anyString());
+        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input");
+        Assert.assertNull(response.getData());
     }
 
 
