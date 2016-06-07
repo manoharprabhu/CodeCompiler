@@ -1,6 +1,7 @@
 package com.dockerconsumercompiler.configuration;
 
 import com.dockerconsumercompiler.services.MessageReceiverService;
+import com.dockerconsumercompiler.services.ProgramRepository;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -9,6 +10,7 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,6 +24,9 @@ public class RabbitMQConfiguration {
     public static final String EXCHANGE_NAME = "exchange";
     public static final String METHOD_NAME = "receiveMessage";
     public static String MQ_HOST = "localhost";
+
+    @Autowired
+    private ProgramRepository programRepository;
 
     @Bean
     Queue queue() {
@@ -54,7 +59,7 @@ public class RabbitMQConfiguration {
 
     @Bean
     MessageReceiverService receiver() {
-        return new MessageReceiverService();
+        return new MessageReceiverService(this.programRepository);
     }
 
     @Bean

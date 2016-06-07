@@ -16,7 +16,7 @@ public class CodeCompilerController {
     private CodeCompilerService codeCompilerService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/submit")
-    public Response submitProgram(@RequestBody String program, @RequestBody String input) {
+    public Response submitProgram(@RequestParam String program, @RequestParam String input) {
         return codeCompilerService.submitProgram(program, input);
     }
 
