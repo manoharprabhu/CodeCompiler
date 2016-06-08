@@ -1,6 +1,5 @@
 package com.codecompiler.configuration;
 
-import com.codecompiler.services.MessageReceiverService;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -43,15 +42,5 @@ public class RabbitMQConfiguration {
         container.setQueueNames(QUEUE_NAME);
         container.setMessageListener(listenerAdapter);
         return container;
-    }
-
-    @Bean
-    MessageReceiverService receiver() {
-        return new MessageReceiverService();
-    }
-
-    @Bean
-    MessageListenerAdapter listenerAdapter(MessageReceiverService receiver) {
-        return new MessageListenerAdapter(receiver, METHOD_NAME);
     }
 }
