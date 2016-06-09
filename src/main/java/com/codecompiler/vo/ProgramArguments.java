@@ -11,4 +11,7 @@ public class ProgramArguments {
 
     @Option(name = "-mongodatabase", usage = "Database name")
     public String mongodbDatabase = "codecompiler";
+
+    @Option(name = "-rmqhost", usage = "Address of RabbitMQ server")
+    public String rmqHost = "localhost";
 }

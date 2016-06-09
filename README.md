@@ -13,7 +13,7 @@ A service to run code snippets and get output
 #### Usage
 For running the Endpoint service
 ```java
-java -jar codecompiler.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDRESS
+java -jar codecompiler.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDRESS -rmqhost RMQ_ADDRESS
 ```
 
 For running the Compiler service 

@@ -4,6 +4,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
@@ -19,6 +20,7 @@ public class RabbitMQConfiguration {
     public static final String QUEUE_NAME = "queue";
     public static final String EXCHANGE_NAME = "exchange";
     public static final String METHOD_NAME = "receiveMessage";
+    public static String MQ_HOST = "localhost";
 
     @Bean
     Queue queue() {
@@ -28,6 +30,11 @@ public class RabbitMQConfiguration {
     @Bean
     TopicExchange exchange() {
         return new TopicExchange(EXCHANGE_NAME);
+    }
+
+    @Bean
+    public ConnectionFactory connectionFactory() {
+        return new CachingConnectionFactory(MQ_HOST);
     }
 
     @Bean

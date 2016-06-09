@@ -1,6 +1,7 @@
 package com.codecompiler;
 
 import com.codecompiler.configuration.MongoConfiguration;
+import com.codecompiler.configuration.RabbitMQConfiguration;
 import com.codecompiler.vo.ProgramArguments;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -25,6 +26,7 @@ public class Application {
     public static void setProgramParameters(ProgramArguments arguments) {
         MongoConfiguration.DATABASE_NAME = arguments.mongodbDatabase;
         MongoConfiguration.HOST = arguments.mongodbHost;
+        RabbitMQConfiguration.MQ_HOST = arguments.rmqHost;
     }
 
     public static ProgramArguments parseArguments(String[] args) throws CmdLineException {
