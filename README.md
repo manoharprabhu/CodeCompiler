@@ -18,5 +18,5 @@ java -jar codecompiler.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDR
 
 For running the Compiler service 
 ```java
-java -jar dockerconsumercompiler.jar -mongodatabase codecompiler -mongohost localhost -rmqhost localhost
+java -jar dockerconsumercompiler.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDRESS -rmqhost RMQ_ADDRESS
 ```
