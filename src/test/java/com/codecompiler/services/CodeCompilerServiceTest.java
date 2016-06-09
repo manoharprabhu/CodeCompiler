@@ -58,7 +58,7 @@ public class CodeCompilerServiceTest {
 
     @Test
     public void testSubmitProgram() {
-        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input");
+        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input", 2);
         Assert.assertNotNull(response.getData());
     }
 
@@ -66,14 +66,14 @@ public class CodeCompilerServiceTest {
     @Test
     public void testSubmitProgramWhenDatabaseNotRunning() {
         Mockito.doThrow(new DataAccessResourceFailureException("Database is not up")).when(programRepository).save(Mockito.any(ProgramEntity.class));
-        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input");
+        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input", 2);
         Assert.assertNull(response.getData());
     }
 
     @Test
     public void testSubmitProgramWhenMQNotRunning() {
         Mockito.doThrow(new AmqpException("MQ is not running")).when(rabbitTemplate).convertAndSend(Mockito.anyString(), Mockito.anyString());
-        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input");
+        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input", 2);
         Assert.assertNull(response.getData());
     }
 

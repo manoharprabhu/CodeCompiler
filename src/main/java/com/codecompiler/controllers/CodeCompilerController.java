@@ -16,8 +16,8 @@ public class CodeCompilerController {
     private CodeCompilerService codeCompilerService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/submit")
-    public Response submitProgram(@RequestParam String program, @RequestParam String input) {
-        return codeCompilerService.submitProgram(program, input);
+    public Response submitProgram(@RequestParam String program, @RequestParam String input, @RequestParam int timeout) {
+        return codeCompilerService.submitProgram(program, input, timeout);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/status")

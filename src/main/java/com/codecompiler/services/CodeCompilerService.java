@@ -36,13 +36,13 @@ public class CodeCompilerService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public Response<ProgramSubmitResponse> submitProgram(String program, String input) {
+    public Response<ProgramSubmitResponse> submitProgram(String program, String input, int timeout) {
         ProgramEntity programEntity = new ProgramEntity();
         ProgramSubmitResponse response = null;
         String uniqueId = generateUniqueID();
         programEntity.setProgram(program);
         programEntity.setInput(input);
-        programEntity.setExecutionTimeLimit(2);
+        programEntity.setExecutionTimeLimit(timeout);
         programEntity.setQueuedTime(new Date());
         programEntity.setQueueId(uniqueId);
         try {

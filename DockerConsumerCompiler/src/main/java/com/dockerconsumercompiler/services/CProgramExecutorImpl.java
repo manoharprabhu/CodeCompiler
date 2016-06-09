@@ -60,7 +60,9 @@ public class CProgramExecutorImpl implements IProgramExecutor {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         DefaultExecutor timedExecutor = new DefaultExecutor();
         timedExecutor.setExitValue(0);
-        ExecuteWatchdog watchdog = new ExecuteWatchdog(2000);
+        ExecuteWatchdog watchdog = new ExecuteWatchdog(programEntity.getExecutionTimeLimit() > 0
+                ? (programEntity.getExecutionTimeLimit()*1000)
+                : 2000);
         timedExecutor.setWatchdog(watchdog);
         try {
             timedExecutor.setStreamHandler(new PumpStreamHandler(output, null, input));

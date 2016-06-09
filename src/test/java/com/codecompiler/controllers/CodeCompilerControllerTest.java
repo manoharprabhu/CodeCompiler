@@ -22,8 +22,8 @@ public class CodeCompilerControllerTest {
 
     @Test
     public void testSubmitProgram() {
-        codeCompilerController.submitProgram("program", "input");
-        Mockito.verify(codeCompilerService, Mockito.times(1)).submitProgram("program", "input");
+        codeCompilerController.submitProgram("program", "input", 2);
+        Mockito.verify(codeCompilerService, Mockito.times(1)).submitProgram("program", "input", 2);
     }
 
     @Test
