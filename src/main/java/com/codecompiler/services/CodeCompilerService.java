@@ -36,7 +36,9 @@ public class CodeCompilerService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public Response<ProgramSubmitResponse> submitProgram(String program, String input, int timeout) {
+    public Response<ProgramSubmitResponse> submitProgram(String program, String input, int timeout, String language) {
+        if(!isLanguageValid(language))
+            return new Response<ProgramSubmitResponse>(null);
         ProgramEntity programEntity = new ProgramEntity();
         ProgramSubmitResponse response = null;
         String uniqueId = generateUniqueID();
@@ -45,6 +47,7 @@ public class CodeCompilerService {
         programEntity.setExecutionTimeLimit(timeout);
         programEntity.setQueuedTime(new Date());
         programEntity.setQueueId(uniqueId);
+        programEntity.setLanguage(language);
         try {
             programRepository.save(programEntity);
             rabbitTemplate.convertAndSend(RabbitMQConfiguration.QUEUE_NAME, uniqueId);
@@ -71,6 +74,10 @@ public class CodeCompilerService {
             response = new ProgramStatusResponse(programEntity.getProgramStatus(), programEntity.getOutput(), programEntity.getErrorMessage(), programEntity.getQueuedTime());
         }
         return new Response<ProgramStatusResponse>(response);
+    }
+
+    public static boolean isLanguageValid(String language) {
+        return "c".equals(language);
     }
 
     public String generateUniqueID() {

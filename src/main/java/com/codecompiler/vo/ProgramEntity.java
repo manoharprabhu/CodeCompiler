@@ -22,6 +22,7 @@ public class ProgramEntity {
     private int programStatus;
     private String errorMessage;
     private String output;
+    private String language;
 
     public String getId() {
         return Id;
@@ -94,4 +95,8 @@ public class ProgramEntity {
     public void setQueuedTime(Date queuedTime) {
         this.queuedTime = queuedTime;
     }
+
+    public String getLanguage() { return this.language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }
