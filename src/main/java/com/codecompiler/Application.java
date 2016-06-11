@@ -18,8 +18,7 @@ public class Application {
     private static Logger logger = Logger.getLogger(Application.class.toString());
 
     public static void main(String[] args) throws CmdLineException {
-        ProgramArguments arguments = parseArguments(args);
-        setProgramParameters(arguments);
+        setProgramParameters(parseArguments(args));
         SpringApplication.run(Application.class, args);
     }
 

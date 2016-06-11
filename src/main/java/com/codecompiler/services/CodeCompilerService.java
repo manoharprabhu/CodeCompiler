@@ -26,10 +26,6 @@ public class CodeCompilerService {
     private ProgramRepository programRepository;
     private RabbitTemplate rabbitTemplate;
 
-    public CodeCompilerService() {
-
-    }
-
     @Autowired
     public CodeCompilerService(ProgramRepository programRepository, RabbitTemplate rabbitTemplate) {
         this.programRepository = programRepository;
