@@ -69,6 +69,13 @@ public class CodeCompilerServiceTest {
         Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input", 2, "c");
         Assert.assertNull(response.getData());
     }
+    
+    @Test
+    public void testCheckProgramStatusWhenDatabaseNotRunning() {
+        Mockito.doThrow(new DataAccessResourceFailureException("Database is not up")).when(programRepository).findByQueueId(Mockito.anyString());
+        Response<ProgramStatusResponse> response = codeCompilerService.checkProgramStatus("queueId");
+        Assert.assertEquals(response.getData().getProgramStatus(), ProgramStatusResponse.PROGRAM_NOT_FOUND);
+    }
 
     @Test
     public void testSubmitProgramWhenMQNotRunning() {
@@ -76,7 +83,12 @@ public class CodeCompilerServiceTest {
         Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input", 2, "c");
         Assert.assertNull(response.getData());
     }
-
+    
+    @Test
+    public void testSubmitProgramWithInvalidLanguage() {
+        Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input", 2, "python");
+        Assert.assertNull(response.getData());
+    }
 
     private ProgramEntity mockProgramEntity() {
         ProgramEntity programEntity = new ProgramEntity();
