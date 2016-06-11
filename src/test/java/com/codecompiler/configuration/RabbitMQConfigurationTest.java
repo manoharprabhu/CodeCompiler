@@ -14,5 +14,6 @@ public class RabbitMQConfigurationTest {
         Assert.assertTrue(rabbitMQConfiguration.exchange().getName().equals("exchange"));
         Assert.assertTrue(rabbitMQConfiguration.METHOD_NAME.equals("receiveMessage"));
         Assert.assertNotNull(rabbitMQConfiguration.binding(rabbitMQConfiguration.queue(), rabbitMQConfiguration.exchange()));
+        Assert.assertNotNull(rabbitMQConfiguration.connectionFactory());
     }
 }

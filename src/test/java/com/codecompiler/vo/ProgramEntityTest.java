@@ -22,6 +22,7 @@ public class ProgramEntityTest {
         programEntity.setInput("input");
         programEntity.setQueuedTime(date);
         programEntity.setQueueId("qid");
+        programEntity.setLanguage("c");
 
         Assert.assertEquals("ID", programEntity.getId());
         Assert.assertEquals(0, programEntity.getProgramStatus());
@@ -32,6 +33,7 @@ public class ProgramEntityTest {
         Assert.assertEquals("input", programEntity.getInput());
         Assert.assertEquals(date, programEntity.getQueuedTime());
         Assert.assertEquals("qid", programEntity.getQueueId());
+        Assert.assertEquals("c", programEntity.getLanguage());
 
     }
 }
