@@ -20,3 +20,24 @@ For running the Compiler service
 ```java
 java -jar dockerconsumercompiler.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDRESS -rmqhost RMQ_ADDRESS
 ```
+#### Endpoints exposed by the endpoint service
+----
+ POST | :8080/codecompiler/submit |
+|------|---------------------------|
+
+| Parameter  | Description                                                        |
+|------------|--------------------------------------------------------------------|
+| program    | The program to be compiled and run.                                |
+| input      | The input that will be fed to the program STDIN.                   |
+| timeout    | Number of seconds the program can run before it is killed off.     |
+| language   | The language of submitted program.                                 |
+Returns Queue ID of the submitted program. This ID can be used for future reference to check the program status.
+````JSON
+{
+    data: {
+        queueId: 1107894191825737787218556533052298445977
+    },
+    timestamp: 1465762230
+}
+````
+----
