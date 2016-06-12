@@ -34,10 +34,10 @@ java -jar dockerconsumercompiler.jar -mongodatabase DATABASE_NAME -mongohost DAT
 Returns Queue ID of the submitted program. This ID can be used for future reference to check the program status.
 ````JSON
 {
-    data: {
-        queueId: 1107894191825737787218556533052298445977
+    "data": {
+        "queueId": 1107894191825737787218556533052298445977
     },
-    timestamp: 1465762230
+    "timestamp": 1465762230
 }
 ````
 ----
