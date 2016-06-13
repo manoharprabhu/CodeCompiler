@@ -41,3 +41,38 @@ Returns Queue ID of the submitted program. This ID can be used for future refere
 }
 ````
 ----
+ GET | :8080/codecompiler/status |
+|------|---------------------------|
+
+| Parameter  | Description                                                        |
+|------------|--------------------------------------------------------------------|
+| queueId    | The Queue ID of the submitted program to be checked.               |
+Returns the status of the submitted program, result, and error if any.
+````JSON
+{
+    "data": {
+        "errorMessage": null,
+        "output": "34\n5\n21",
+        "programStatus": 6,
+        "submittedDate": 1465760000
+    },
+    "timestamp": 1465762230
+}
+````
+| Attribute       | Description                                                                                         |
+|-----------------|-----------------------------------------------------------------------------------------------------|
+| errorMessage    | A human readable error message encountered if any, during the compilation or execution phase.       |
+| output          | Output of the submitted program if it runs successfully.                                            |
+| programStatus   | One of the seven integers as defined below.                                                         |
+| submittedDate   | The time at which the program was submitted.                                                        |
+
+| programStatus value       | programStatus Description |
+|---------------------------|---------------------------|
+| 0 | No such program found in queue.                   |
+| 1 | Program in queue for compilation.                 |
+| 2 | Program is getting processed.                     |
+| 3 | Program compilation error.                        |
+| 4 | Program timed out while running.                  |
+| 5 | Program crashed/returned non zero exit value.     |
+| 6 | Program completed running successfully.           |
+----
