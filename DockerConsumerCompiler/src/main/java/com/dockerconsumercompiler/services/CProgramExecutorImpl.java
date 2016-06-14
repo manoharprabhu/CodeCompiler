@@ -23,18 +23,31 @@ public class CProgramExecutorImpl implements IProgramExecutor {
         this.programRepository = programRepository;
     }
     @Override
-    public void executeProgram() throws IOException {
+    public void executeProgram() {
         DefaultExecutor defaultExecutor = new DefaultExecutor();
 
         if(!Files.exists(Paths.get(message))) {
             //Create a temp directory of name queueID
             CommandLine makeDirectory = new CommandLine("mkdir");
             makeDirectory.addArgument(message);
-            defaultExecutor.execute(makeDirectory);
+            try {
+                defaultExecutor.execute(makeDirectory);
+            } catch (IOException e) {
+                logger.info("Error while running the command");
+                e.printStackTrace();
+                return;
+            }
         }
 
         //write the program and input file into this
-        PrintWriter programWriter = new PrintWriter(message + File.separator + "program");
+        PrintWriter programWriter = null;
+        try {
+            programWriter = new PrintWriter(message + File.separator + "program");
+        } catch (FileNotFoundException e) {
+            logger.info("Unable to open the program file");
+            e.printStackTrace();
+            return;
+        }
         programWriter.write(programEntity.getProgram());
         programWriter.close();
 
@@ -54,12 +67,22 @@ public class CProgramExecutorImpl implements IProgramExecutor {
             programEntity.setErrorMessage("Compilation error");
             programRepository.save(programEntity);
             return;
+        } catch (IOException e) {
+            logger.info("Unable to execute the command");
+            e.printStackTrace();
+            return;
         }
 
         //If compilation succeeds, run the binary and pipe the input into it
         CommandLine executorCommand = CommandLine.parse(message + File.separator + "a.out");
-        ByteArrayInputStream input =
-                new ByteArrayInputStream(programEntity.getInput().getBytes("ISO-8859-1"));
+        ByteArrayInputStream input = null;
+        try {
+            input = new ByteArrayInputStream(programEntity.getInput().getBytes("ISO-8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            logger.info("Unable to pipe input into the program");
+            e.printStackTrace();
+            return;
+        }
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         DefaultExecutor timedExecutor = new DefaultExecutor();
         timedExecutor.setExitValue(0);
@@ -86,6 +109,10 @@ public class CProgramExecutorImpl implements IProgramExecutor {
                 programEntity.setErrorMessage("Non-zero exit status code. Make sure your program returns 0");
             }
             programRepository.save(programEntity);
+            return;
+        } catch (IOException e) {
+            logger.info("Unable to execute the command");
+            e.printStackTrace();
             return;
         }
     }
