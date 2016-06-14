@@ -26,6 +26,17 @@ public class CProgramExecutorImpl implements IProgramExecutor {
     public void executeProgram() {
         DefaultExecutor defaultExecutor = new DefaultExecutor();
 
+        // Make sure GCC is installed for compiling C program
+        try {
+            if(defaultExecutor.execute(new CommandLine("gcc").addArgument("-v")) != 0) {
+                logger.info("GCC is not installed");
+                return;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
         if(!Files.exists(Paths.get(message))) {
             //Create a temp directory of name queueID
             CommandLine makeDirectory = new CommandLine("mkdir");
