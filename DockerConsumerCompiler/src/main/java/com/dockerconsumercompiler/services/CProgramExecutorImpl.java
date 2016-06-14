@@ -4,6 +4,8 @@ import com.dockerconsumercompiler.vo.ProgramEntity;
 import org.apache.commons.exec.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 /**
@@ -24,11 +26,12 @@ public class CProgramExecutorImpl implements IProgramExecutor {
     public void executeProgram() throws IOException {
         DefaultExecutor defaultExecutor = new DefaultExecutor();
 
-        //Create a temp directory of name queueID
-        CommandLine makeDirectory = new CommandLine("mkdir");
-        makeDirectory.addArgument(message);
-        defaultExecutor.execute(makeDirectory);
-
+        if(!Files.exists(Paths.get(message))) {
+            //Create a temp directory of name queueID
+            CommandLine makeDirectory = new CommandLine("mkdir");
+            makeDirectory.addArgument(message);
+            defaultExecutor.execute(makeDirectory);
+        }
 
         //write the program and input file into this
         PrintWriter programWriter = new PrintWriter(message + File.separator + "program");
