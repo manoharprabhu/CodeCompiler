@@ -1,5 +1,4 @@
 group 'com.dockerconsumercompiler'
-version '1.0-SNAPSHOT'
 
 buildscript {
     repositories {
@@ -41,5 +40,4 @@ apply plugin: 'spring-boot'
 
 jar {
     baseName = 'dockerconsumercompiler'
-    version =  '0.1.0'
 }
