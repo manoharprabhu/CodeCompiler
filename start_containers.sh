@@ -30,14 +30,21 @@ ENDPOINT_CONTAINER_ADDRESS=`docker inspect --format '{{ .NetworkSettings.IPAddre
 rc=$?; if [[ $rc != 0 ]]; then echo "Could not get the IP address of endpoint container"; exit $rc; fi
 echo "IP Address of endpoint container is $ENDPOINT_CONTAINER_ADDRESS"
 
+NUMBER_OF_CONSUMER_INSTANCES=$1
 #Start the consumer container
-echo "Starting the consumer container"
-CONSUMER_CONTAINER_ID=`docker run -d -p 8089:8089 manoharprabhu/codecompiler-consumer java -jar dockerconsumercompiler.jar -mongodatabase codecompiler -mongohost "$MONGODB_CONTAINER_ADDRESS" -rmqhost "$RABBITMQ_CONTAINER_ADDRESS"`
-rc=$?; if [[ $rc != 0 ]]; then echo "Could not run the consumer container"; exit $rc; fi
-echo "Started consumer container with ID as $CONSUMER_CONTAINER_ID"
-CONSUMER_CONTAINER_ADDRESS=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$CONSUMER_CONTAINER_ID"`
-rc=$?; if [[ $rc != 0 ]]; then echo "Could not get the IP address of consumer container"; exit $rc; fi
-echo "IP Address of endpoint container is $CONSUMER_CONTAINER_ADDRESS"
+echo "Starting $NUMBER_OF_CONSUMER_INSTANCES consumer container instances"
+COUNTER=0
+PORT=8089
+while [ $COUNTER -lt $NUMBER_OF_CONSUMER_INSTANCES ]; do
+	CONSUMER_CONTAINER_ID=`docker run -d -p "$PORT":"$PORT" manoharprabhu/codecompiler-consumer java -jar dockerconsumercompiler.jar -mongodatabase codecompiler -mongohost "$MONGODB_CONTAINER_ADDRESS" -rmqhost "$RABBITMQ_CONTAINER_ADDRESS"`
+	rc=$?; if [[ $rc != 0 ]]; then echo "Could not run the consumer container instance $COUNTER"; exit $rc; fi
+	echo "Started consumer container with ID as $CONSUMER_CONTAINER_ID"
+	CONSUMER_CONTAINER_ADDRESS=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$CONSUMER_CONTAINER_ID"`
+	rc=$?; if [[ $rc != 0 ]]; then echo "Could not get the IP address of consumer container instance $COUNTER"; exit $rc; fi
+	echo "IP Address of endpoint container $COUNTER is $CONSUMER_CONTAINER_ADDRESS"
+	let COUNTER=COUNTER+1
+	let PORT=PORT+1
+done
 
 exit 0
 
