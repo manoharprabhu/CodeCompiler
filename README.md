@@ -10,6 +10,13 @@ A service to run code snippets and get output
 * Java 7
 * GCC for compiling input C programs
 
+#### Deploy all the services automatically on local system
+````bash
+./start_containers.sh NO_OF_INSTANCES_OF_CONSUMER
+````
+Build the endpoint and consumer JAR files, create docker images out of it, build the RMQ and MongoDB images, and start the containers with appropriate input parameters automatically.
+**NO_OF_INSTANCES_OF_CONSUMER** number of consumer containers will be started.
+
 #### Usage
 For running the Endpoint service
 ```java
