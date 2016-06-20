@@ -17,15 +17,8 @@ import java.util.logging.Logger;
 public class Application {
     private static Logger logger = Logger.getLogger(Application.class.toString());
 
-    public static void main(String[] args) {
-        try {
-            ProgramArguments arguments = parseArguments(args);
-            setProgramParameters(arguments);
-        } catch(CmdLineException e) {
-            logger.info("Incorrect arguments passed");
-            new CmdLineParser(new ProgramArguments()).printUsage(System.out);
-            System.exit(1);
-        }
+    public static void main(String[] args) throws CmdLineException {
+        setProgramParameters(parseArguments(args));
         SpringApplication.run(Application.class, args);
     }
 
