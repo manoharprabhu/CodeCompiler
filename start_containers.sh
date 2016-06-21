@@ -1,4 +1,7 @@
 #!/bin/bash
+DOCKER_DETECT=`docker -v`
+rc=$?; if [[ $rc != 0 ]]; then echo "Docker client not installed"; exit $rc; fi
+
 echo "Building all the required images. Please wait..."
 BUILD_IMAGES=`./build_docker_images.sh`
 rc=$?; if [[ $rc != 0 ]]; then echo "Could not build the docker images properly"; echo $BUILD_IMAGES; exit $rc; fi
