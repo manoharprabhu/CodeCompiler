@@ -9,7 +9,7 @@ A service to run code snippets and get output
 * MongoDB server
 * Java 7
 * GCC for compiling input C programs
-* Docker for hosting the containers
+* Docker for running the containers
 
 #### Deploy all the services automatically on local system
 ````bash
