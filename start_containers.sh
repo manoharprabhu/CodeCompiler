@@ -1,4 +1,12 @@
 #!/bin/bash
+INPUT_NUM_CONSUMERS=$1
+if [ -z "$1" ]
+then
+    INPUT_NUM_CONSUMERS=1
+fi
+echo "Setting number of consumer instances to $INPUT_NUM_CONSUMERS"
+NUMBER_OF_CONSUMER_INSTANCES=$INPUT_NUM_CONSUMERS
+
 DOCKER_DETECT=`docker -v`
 rc=$?; if [[ $rc != 0 ]]; then echo "Docker client not installed"; exit $rc; fi
 
@@ -33,7 +41,6 @@ ENDPOINT_CONTAINER_ADDRESS=`docker inspect --format '{{ .NetworkSettings.IPAddre
 rc=$?; if [[ $rc != 0 ]]; then echo "Could not get the IP address of endpoint container"; exit $rc; fi
 echo "IP Address of endpoint container is $ENDPOINT_CONTAINER_ADDRESS"
 
-NUMBER_OF_CONSUMER_INSTANCES=$1
 #Start the consumer container
 echo "Starting $NUMBER_OF_CONSUMER_INSTANCES consumer container instances"
 COUNTER=0

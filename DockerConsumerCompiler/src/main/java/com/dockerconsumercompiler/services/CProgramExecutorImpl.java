@@ -1,17 +1,28 @@
 package com.dockerconsumercompiler.services;
 
-import com.dockerconsumercompiler.vo.ProgramEntity;
-import org.apache.commons.exec.*;
-
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
 
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteException;
+import org.apache.commons.exec.ExecuteWatchdog;
+import org.apache.commons.exec.PumpStreamHandler;
+
+import com.dockerconsumercompiler.vo.ProgramEntity;
+
 /**
  * Created by Manohar Prabhu on 6/9/2016.
  */
-public class CProgramExecutorImpl implements IProgramExecutor {
+public class CProgramExecutorImpl extends IProgramExecutor {
     private String message;
     private ProgramEntity programEntity;
     private ProgramRepository programRepository;
@@ -22,19 +33,19 @@ public class CProgramExecutorImpl implements IProgramExecutor {
         this.programEntity = programEntity;
         this.programRepository = programRepository;
     }
-    @Override
-    public void executeProgram() {
-        DefaultExecutor defaultExecutor = new DefaultExecutor();
+	@Override
+	public boolean preCompile() {
+		DefaultExecutor defaultExecutor = new DefaultExecutor();
 
         // Make sure GCC is installed for compiling C program
         try {
             if(defaultExecutor.execute(new CommandLine("gcc").addArgument("-v")) != 0) {
                 logger.info("GCC is not installed");
-                return;
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return;
+            return false;
         }
 
         if(!Files.exists(Paths.get(message))) {
@@ -46,7 +57,7 @@ public class CProgramExecutorImpl implements IProgramExecutor {
             } catch (IOException e) {
                 logger.info("Error while running the command");
                 e.printStackTrace();
-                return;
+                return false;
             }
         }
 
@@ -57,7 +68,7 @@ public class CProgramExecutorImpl implements IProgramExecutor {
         } catch (FileNotFoundException e) {
             logger.info("Unable to open the program file");
             e.printStackTrace();
-            return;
+            return false;
         }
         programWriter.write(programEntity.getProgram());
         programWriter.close();
@@ -65,8 +76,14 @@ public class CProgramExecutorImpl implements IProgramExecutor {
         // Set program status to PROGRAM_IS_GETTING_PROCESSED = 2;
         programEntity.setProgramStatus(2);
         programRepository.save(programEntity);
+        return true;
+	}
+	
+	@Override
+	public boolean compile() {
+		DefaultExecutor defaultExecutor = new DefaultExecutor();
 
-        //Compile the program
+		//Compile the program
         CommandLine compiler = CommandLine.parse("gcc -x c " + message + File.separator + "program" + " -o "+ message + File.separator + "a.out");
         try {
             defaultExecutor.execute(compiler);
@@ -77,14 +94,18 @@ public class CProgramExecutorImpl implements IProgramExecutor {
             programEntity.setProgramStatus(3);
             programEntity.setErrorMessage("Compilation error");
             programRepository.save(programEntity);
-            return;
+            return false;
         } catch (IOException e) {
             logger.info("Unable to execute the command");
             e.printStackTrace();
-            return;
+            return false;
         }
-
-        //If compilation succeeds, run the binary and pipe the input into it
+        
+        return true;
+	}
+	@Override
+	public boolean runProgram() {
+		//If compilation succeeds, run the binary and pipe the input into it
         CommandLine executorCommand = CommandLine.parse(message + File.separator + "a.out");
         ByteArrayInputStream input = null;
         try {
@@ -92,7 +113,7 @@ public class CProgramExecutorImpl implements IProgramExecutor {
         } catch (UnsupportedEncodingException e) {
             logger.info("Unable to pipe input into the program");
             e.printStackTrace();
-            return;
+            return false;
         }
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         DefaultExecutor timedExecutor = new DefaultExecutor();
@@ -120,11 +141,12 @@ public class CProgramExecutorImpl implements IProgramExecutor {
                 programEntity.setErrorMessage("Non-zero exit status code. Make sure your program returns 0");
             }
             programRepository.save(programEntity);
-            return;
+            return false;
         } catch (IOException e) {
             logger.info("Unable to execute the command");
             e.printStackTrace();
-            return;
+            return false;
         }
-    }
+        return true;
+	}
 }
