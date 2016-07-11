@@ -74,8 +74,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
         programWriter.close();
 
         // Set program status to PROGRAM_IS_GETTING_PROCESSED = 2;
-        programEntity.setProgramStatus(2);
-        programRepository.save(programEntity);
+        this.updateProgramEntity(programEntity, null, null, 2);
         return true;
 	}
 	
@@ -91,9 +90,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
             logger.info("Compilation was UNSUCCESSFUL");
             e.printStackTrace();
             // Update database status code to PROGRAM_COMPILATION_ERROR = 3;
-            programEntity.setProgramStatus(3);
-            programEntity.setErrorMessage("Compilation error");
-            programRepository.save(programEntity);
+            this.updateProgramEntity(programEntity, Messages.COMPILATION_ERROR, null, 3);
             return false;
         } catch (IOException e) {
             logger.info("Unable to execute the command");
@@ -125,22 +122,17 @@ public class CProgramExecutor extends AbstractProgramExecutor {
         try {
             timedExecutor.setStreamHandler(new PumpStreamHandler(output, null, input));
             timedExecutor.execute(executorCommand);
-            programEntity.setProgramStatus(6);
-            programEntity.setOutput(output.toString());
-            programRepository.save(programEntity);
+            this.updateProgramEntity(programEntity, null, output.toString(), 6);
         } catch(ExecuteException e) {
             logger.info("Non-zero exit value. The program crashed \\ timedout");
             e.printStackTrace();
             if (watchdog.killedProcess()) {
                 // Update database status code to PROGRAM_EXECUTION_TIMEOUT = 4;
-                programEntity.setProgramStatus(4);
-                programEntity.setErrorMessage("Program did not complete execution in time");
+            	this.updateProgramEntity(programEntity, Messages.DID_NOT_EXECUTE_IN_TIME, null, 4);
             } else {
                 // Update database status code to PROGRAM_RUNTIME_ERROR = 5;
-                programEntity.setProgramStatus(5);
-                programEntity.setErrorMessage("Non-zero exit status code. Make sure your program returns 0");
+            	this.updateProgramEntity(programEntity, Messages.NON_ZERO_EXIT_STATUS, null, 5);
             }
-            programRepository.save(programEntity);
             return false;
         } catch (IOException e) {
             logger.info("Unable to execute the command");
@@ -148,5 +140,12 @@ public class CProgramExecutor extends AbstractProgramExecutor {
             return false;
         }
         return true;
+	}
+	
+	public void updateProgramEntity(ProgramEntity programEntity, String errorMessage, String output, int programStatus) {
+		programEntity.setProgramStatus(programStatus);
+		programEntity.setOutput(output);
+		programEntity.setErrorMessage(errorMessage);
+		programRepository.save(programEntity);
 	}
 }
