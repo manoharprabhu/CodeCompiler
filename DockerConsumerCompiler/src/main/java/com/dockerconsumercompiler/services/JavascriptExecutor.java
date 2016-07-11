@@ -36,7 +36,7 @@ public class JavascriptExecutor extends AbstractProgramExecutor {
 	public boolean preCompile() {
 		 DefaultExecutor defaultExecutor = new DefaultExecutor();
 
-        // Make sure node is installed for compiling C program
+        // Make sure node is installed
         try {
             if(defaultExecutor.execute(new CommandLine("node").addArgument("-v")) != 0) {
                 logger.info("node is not installed");

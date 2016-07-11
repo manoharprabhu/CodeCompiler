@@ -89,6 +89,12 @@ public class CodeCompilerServiceTest {
         Response<ProgramSubmitResponse> response = codeCompilerService.submitProgram("program", "input", 2, "python");
         Assert.assertNull(response.getData());
     }
+    
+    @Test
+    public void testValidLanguages() {
+    	Assert.assertTrue(CodeCompilerService.isLanguageValid("c"));
+    	Assert.assertTrue(CodeCompilerService.isLanguageValid("js"));
+    }
 
     private ProgramEntity mockProgramEntity() {
         ProgramEntity programEntity = new ProgramEntity();
