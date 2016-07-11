@@ -22,13 +22,13 @@ import com.dockerconsumercompiler.vo.ProgramEntity;
 /**
  * Created by Manohar Prabhu on 6/9/2016.
  */
-public class CProgramExecutorImpl extends IProgramExecutor {
+public class CProgramExecutor extends AbstractProgramExecutor {
     private String message;
     private ProgramEntity programEntity;
     private ProgramRepository programRepository;
-    private Logger logger = Logger.getLogger(CProgramExecutorImpl.class.getName());
+    private Logger logger = Logger.getLogger(CProgramExecutor.class.getName());
 
-    public CProgramExecutorImpl(String message, ProgramEntity programEntity, ProgramRepository programRepository) {
+    public CProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository) {
         this.message = message;
         this.programEntity = programEntity;
         this.programRepository = programRepository;

@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 /**
  * Created by Manohar Prabhu on 6/9/2016.
  */
-public abstract class IProgramExecutor {
-	private Logger logger = Logger.getLogger(IProgramExecutor.class.getName());
+public abstract class AbstractProgramExecutor {
+	private Logger logger = Logger.getLogger(AbstractProgramExecutor.class.getName());
 	
 	abstract public boolean preCompile();
 	

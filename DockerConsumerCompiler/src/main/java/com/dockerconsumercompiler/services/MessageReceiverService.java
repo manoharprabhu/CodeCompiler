@@ -26,7 +26,7 @@ public class MessageReceiverService {
         if(programEntity == null) {
             return;
         }
-        IProgramExecutor executor = ProgramExecutorFactory.getCProgramExecutor(message, programEntity, programRepository);
+        AbstractProgramExecutor executor = ProgramExecutorFactory.getCProgramExecutor(message, programEntity, programRepository);
         executor.executeProgram();
     }
 }

@@ -8,7 +8,7 @@ import com.dockerconsumercompiler.vo.ProgramEntity;
 public class ProgramExecutorFactory {
     private ProgramExecutorFactory(){}
 
-    public static IProgramExecutor getCProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository) {
-        return new CProgramExecutorImpl(message, programEntity, programRepository);
+    public static AbstractProgramExecutor getCProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository) {
+        return new CProgramExecutor(message, programEntity, programRepository);
     }
 }
