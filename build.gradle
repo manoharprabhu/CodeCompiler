@@ -12,6 +12,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
+apply plugin: 'eclipse'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7

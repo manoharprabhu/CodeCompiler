@@ -73,7 +73,8 @@ public class CodeCompilerService {
     }
 
     public static boolean isLanguageValid(String language) {
-        return "c".equals(language);
+        return "c".equals(language)
+        		|| "js".equals(language);
     }
 
     public String generateUniqueID() {

@@ -26,7 +26,12 @@ public class MessageReceiverService {
         if(programEntity == null) {
             return;
         }
-        AbstractProgramExecutor executor = ProgramExecutorFactory.getCProgramExecutor(message, programEntity, programRepository);
+        AbstractProgramExecutor executor = null;
+        if("c".equals(programEntity.getLanguage())) {
+        	executor = ProgramExecutorFactory.getCProgramExecutor(message, programEntity, programRepository);
+        } else if("js".equals(programEntity.getLanguage())) {
+        	executor = ProgramExecutorFactory.getJSProgramExecutor(message, programEntity, programRepository);
+        }
         executor.executeProgram();
     }
 }
