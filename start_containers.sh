@@ -34,7 +34,7 @@ echo "IP Address of mongodb container is $MONGODB_CONTAINER_ADDRESS"
 
 #Start the endpoint container
 echo "Starting the endpoint container"
-ENDPOINT_CONTAINER_ID=`docker run -d -p 8080:8080 manoharprabhu/codecompiler-endpoint java -jar codecompiler.jar -mongodatabase codecompiler -mongohost "$MONGODB_CONTAINER_ADDRESS" -rmqhost "$RABBITMQ_CONTAINER_ADDRESS"`
+ENDPOINT_CONTAINER_ID=`docker run -d -p 8080:8080 manoharprabhu/codecompiler-endpoint java -jar endpoint.jar -mongodatabase codecompiler -mongohost "$MONGODB_CONTAINER_ADDRESS" -rmqhost "$RABBITMQ_CONTAINER_ADDRESS"`
 rc=$?; if [[ $rc != 0 ]]; then echo "Could not run the endpoint container"; exit $rc; fi
 echo "Started endpoint container with ID as $ENDPOINT_CONTAINER_ID"
 ENDPOINT_CONTAINER_ADDRESS=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$ENDPOINT_CONTAINER_ID"`
