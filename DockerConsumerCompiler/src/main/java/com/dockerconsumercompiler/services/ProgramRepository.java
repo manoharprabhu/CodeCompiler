@@ -1,7 +1,7 @@
 package com.dockerconsumercompiler.services;
 
 
-import com.dockerconsumercompiler.vo.ProgramEntity;
+import com.codecompiler.vo.ProgramEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**

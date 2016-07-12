@@ -1,6 +1,6 @@
 package com.dockerconsumercompiler.services;
 
-import com.dockerconsumercompiler.vo.ProgramEntity;
+import com.codecompiler.vo.ProgramEntity;
 
 /**
  * Created by Manohar Prabhu on 6/9/2016.

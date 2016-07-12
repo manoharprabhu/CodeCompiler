@@ -17,7 +17,7 @@ import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 
-import com.dockerconsumercompiler.vo.ProgramEntity;
+import com.codecompiler.vo.ProgramEntity;
 
 /**
  * Created by Manohar Prabhu on 6/9/2016.
