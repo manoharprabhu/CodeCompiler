@@ -18,6 +18,7 @@ import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 
 import com.codecompiler.vo.ProgramEntity;
+import com.codecompiler.vo.ProgramStatusResponse;
 
 /**
  * Created by Manohar Prabhu on 6/9/2016.
@@ -74,7 +75,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
         programWriter.close();
 
         // Set program status to PROGRAM_IS_GETTING_PROCESSED = 2;
-        this.updateProgramEntity(programEntity, null, null, 2);
+        this.updateProgramEntity(programEntity, null, null, ProgramStatusResponse.PROGRAM_IS_GETTING_PROCESSED);
         return true;
 	}
 	
@@ -90,7 +91,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
             logger.info("Compilation was UNSUCCESSFUL");
             e.printStackTrace();
             // Update database status code to PROGRAM_COMPILATION_ERROR = 3;
-            this.updateProgramEntity(programEntity, Messages.COMPILATION_ERROR, null, 3);
+            this.updateProgramEntity(programEntity, Messages.COMPILATION_ERROR, null, ProgramStatusResponse.PROGRAM_COMPILATION_ERROR);
             return false;
         } catch (IOException e) {
             logger.info("Unable to execute the command");
@@ -122,16 +123,16 @@ public class CProgramExecutor extends AbstractProgramExecutor {
         try {
             timedExecutor.setStreamHandler(new PumpStreamHandler(output, null, input));
             timedExecutor.execute(executorCommand);
-            this.updateProgramEntity(programEntity, null, output.toString(), 6);
+            this.updateProgramEntity(programEntity, null, output.toString(), ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY);
         } catch(ExecuteException e) {
             logger.info("Non-zero exit value. The program crashed \\ timedout");
             e.printStackTrace();
             if (watchdog.killedProcess()) {
                 // Update database status code to PROGRAM_EXECUTION_TIMEOUT = 4;
-            	this.updateProgramEntity(programEntity, Messages.DID_NOT_EXECUTE_IN_TIME, null, 4);
+            	this.updateProgramEntity(programEntity, Messages.DID_NOT_EXECUTE_IN_TIME, null, ProgramStatusResponse.PROGRAM_EXECUTION_TIMEOUT);
             } else {
                 // Update database status code to PROGRAM_RUNTIME_ERROR = 5;
-            	this.updateProgramEntity(programEntity, Messages.NON_ZERO_EXIT_STATUS, null, 5);
+            	this.updateProgramEntity(programEntity, Messages.NON_ZERO_EXIT_STATUS, null, ProgramStatusResponse.PROGRAM_RUNTIME_ERROR);
             }
             return false;
         } catch (IOException e) {
