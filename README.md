@@ -21,12 +21,12 @@ Build the endpoint and consumer JAR files, create docker images out of it, build
 #### Usage
 For running the Endpoint service
 ```java
-java -jar codecompiler.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDRESS -rmqhost RMQ_ADDRESS
+java -jar Endpoint/build/libs/endpoint.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDRESS -rmqhost RMQ_ADDRESS
 ```
 
 For running the Compiler service 
 ```java
-java -jar dockerconsumercompiler.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDRESS -rmqhost RMQ_ADDRESS
+java -jar DockerConsumerCompiler/build/libs/dockerconsumercompiler.jar -mongodatabase DATABASE_NAME -mongohost DATABASE_ADDRESS -rmqhost RMQ_ADDRESS
 ```
 #### Endpoints exposed by the endpoint service
 ----
