@@ -22,7 +22,8 @@ public class ApplicationTest {
 
     @Test(expected = CmdLineException.class)
     public void testInvalidArgumentParsing() throws CmdLineException {
-        ProgramArguments programArguments = Application.parseArguments(new String[]{"-invalid","127.0.0.1","-mongodatabase","codecompiler"});
+        Application.parseArguments(new String[]{"-invalid","127.0.0.1","-mongodatabase","codecompiler"});
+        Assert.assertTrue(false);
     }
 
     @Test

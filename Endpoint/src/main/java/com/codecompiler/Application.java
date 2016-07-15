@@ -15,8 +15,6 @@ import java.util.logging.Logger;
  */
 @SpringBootApplication
 public class Application {
-    private static Logger logger = Logger.getLogger(Application.class.toString());
-
     public static void main(String[] args) throws CmdLineException {
         setProgramParameters(parseArguments(args));
         SpringApplication.run(Application.class, args);
