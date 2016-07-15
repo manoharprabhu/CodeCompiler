@@ -1,14 +1,13 @@
 package com.codecompiler;
 
-import com.codecompiler.configuration.MongoConfiguration;
-import com.codecompiler.configuration.RabbitMQConfiguration;
-import com.codecompiler.vo.ProgramArguments;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.logging.Logger;
+import com.codecompiler.configuration.MongoConfiguration;
+import com.codecompiler.configuration.RabbitMQConfiguration;
+import com.codecompiler.vo.ProgramArguments;
 
 /**
  * Created by Manohar Prabhu on 5/27/2016.

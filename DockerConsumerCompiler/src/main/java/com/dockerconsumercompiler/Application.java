@@ -1,14 +1,13 @@
 package com.dockerconsumercompiler;
 
-import com.codecompiler.vo.ProgramArguments;
-import com.dockerconsumercompiler.configuration.MongoConfiguration;
-import com.dockerconsumercompiler.configuration.RabbitMQConfiguration;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.logging.Logger;
+import com.codecompiler.vo.ProgramArguments;
+import com.dockerconsumercompiler.configuration.MongoConfiguration;
+import com.dockerconsumercompiler.configuration.RabbitMQConfiguration;
 
 /**
  * Created by Manohar Prabhu on 6/6/2016.
