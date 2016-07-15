@@ -1,2 +1,12 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+
+project(":Endpoint") {
+
+}
+project(":common") {
+
+}
+project(":DockerConsumerCompiler") {
+
+}

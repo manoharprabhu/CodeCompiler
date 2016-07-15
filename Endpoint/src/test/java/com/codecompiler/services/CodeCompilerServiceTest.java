@@ -1,10 +1,7 @@
 package com.codecompiler.services;
 
-import com.codecompiler.configuration.RabbitMQConfiguration;
-import com.codecompiler.vo.ProgramEntity;
-import com.codecompiler.vo.ProgramStatusResponse;
-import com.codecompiler.vo.ProgramSubmitResponse;
-import com.codecompiler.vo.Response;
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +13,10 @@ import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.dao.DataAccessResourceFailureException;
 
-import java.util.Date;
+import com.codecompiler.vo.ProgramEntity;
+import com.codecompiler.vo.ProgramStatusResponse;
+import com.codecompiler.vo.ProgramSubmitResponse;
+import com.codecompiler.vo.Response;
 
 /**
  * Created by Manohar Prabhu on 5/30/2016.

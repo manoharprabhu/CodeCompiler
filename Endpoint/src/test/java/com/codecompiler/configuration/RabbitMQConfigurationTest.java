@@ -10,9 +10,9 @@ public class RabbitMQConfigurationTest {
     @Test
     public void testRabbitMQConfiguration() {
         RabbitMQConfiguration rabbitMQConfiguration = new RabbitMQConfiguration();
-        Assert.assertTrue(rabbitMQConfiguration.queue().getName().equals("queue"));
-        Assert.assertTrue(rabbitMQConfiguration.exchange().getName().equals("exchange"));
-        Assert.assertTrue(rabbitMQConfiguration.METHOD_NAME.equals("receiveMessage"));
+        Assert.assertTrue("queue".equals(rabbitMQConfiguration.queue().getName()));
+        Assert.assertTrue("exchange".equals(rabbitMQConfiguration.exchange().getName()));
+        Assert.assertTrue("receiveMessage".equals(rabbitMQConfiguration.METHOD_NAME));
         Assert.assertNotNull(rabbitMQConfiguration.binding(rabbitMQConfiguration.queue(), rabbitMQConfiguration.exchange()));
         Assert.assertNotNull(rabbitMQConfiguration.connectionFactory());
     }

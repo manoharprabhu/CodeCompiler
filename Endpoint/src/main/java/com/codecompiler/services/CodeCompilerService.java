@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 @Service
 public class CodeCompilerService {
 
-    Logger logger = Logger.getLogger(Logger.class.toString());
+    private Logger logger = Logger.getLogger(Logger.class.toString());
     private ProgramRepository programRepository;
     private RabbitTemplate rabbitTemplate;
 

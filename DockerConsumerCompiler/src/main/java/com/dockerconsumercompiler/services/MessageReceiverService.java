@@ -1,18 +1,17 @@
 package com.dockerconsumercompiler.services;
 
-import com.codecompiler.vo.ProgramEntity;
-import org.apache.commons.exec.*;
+import java.io.IOException;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.*;
-import java.nio.file.FileSystem;
-import java.util.logging.Logger;
+import com.codecompiler.vo.ProgramEntity;
 
 /**
  * Created by Manohar Prabhu on 5/31/2016.
  */
 public class MessageReceiverService {
-    Logger logger = Logger.getLogger(MessageReceiverService.class.getName());
+    private Logger logger = Logger.getLogger(MessageReceiverService.class.getName());
     private ProgramRepository programRepository;
 
     @Autowired

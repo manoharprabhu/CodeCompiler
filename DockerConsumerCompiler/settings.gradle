@@ -18,5 +18,4 @@ include 'services:webservice'
 
 include 'common'
 project(":common").projectDir = file("../common")
-
 rootProject.name = 'DockerConsumerCompiler'
