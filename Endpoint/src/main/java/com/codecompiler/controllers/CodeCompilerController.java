@@ -24,5 +24,10 @@ public class CodeCompilerController {
     public Response checkProgramStatus(@RequestParam String queueId) {
         return codeCompilerService.checkProgramStatus(queueId);
     }
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/ping")
+    public String ping() {
+    	return "pong";
+    }
 
 }

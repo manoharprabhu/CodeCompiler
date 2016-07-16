@@ -136,9 +136,9 @@ public class CProgramExecutor extends AbstractProgramExecutor {
             }
             return false;
         } catch (IOException e) {
-            logger.info("Unable to execute the command");
-            e.printStackTrace();
-            return false;
+            logger.info("Program did not accept input");
+            this.updateProgramEntity(programEntity, null, output.toString(), ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY);
+            return true;
         }
         return true;
 	}

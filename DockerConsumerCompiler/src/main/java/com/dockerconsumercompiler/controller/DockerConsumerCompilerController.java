@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/dockerconsumercompiler")
 public class DockerConsumerCompilerController {
-    @RequestMapping(method = RequestMethod.GET, path = "/test")
-    public boolean check() {
-        return true;
+	@RequestMapping(method = RequestMethod.GET, path = "/ping")
+    public String ping() {
+    	return "pong";
     }
 }

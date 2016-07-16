@@ -1,0 +1,29 @@
+{
+  "name": "systemtest",
+  "version": "1.0.0",
+  "description": "A system test module to test codecompiler",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manoharprabhu/codecompiler.git"
+  },
+  "keywords": [
+    "system",
+    "test",
+    "codecompiler"
+  ],
+  "author": "Manohar Prabhu B",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manoharprabhu/codecompiler/issues"
+  },
+  "homepage": "https://github.com/manoharprabhu/codecompiler#readme",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
+    "request": "^2.73.0"
+  }
+}
