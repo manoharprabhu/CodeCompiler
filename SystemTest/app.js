@@ -173,5 +173,68 @@ describe('System test for codecompiler', function(){
 		    });
 		});
 	});
+
+	describe('Javascript tests', function(){
+		describe('Submit a successfully running Javascript program', function() {
+		    it('Javascript program should run successfully and produce "success" as output and status 6', function(done){
+			    submitProgram('console.log("success")', '', 1, 'js', function(err, queueId){
+				if(!err) {
+				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+					if(!err) {
+					    expect(output).to.equal('success\n');
+					}
+					done()
+				    });
+				}
+			    });	
+		    });
+		});
+		describe('Submit a wrong Javascript program', function() {
+		    it('JS program should crash on runtime', function(done){
+			    submitProgram('"use strict"; nonExistentObject.run();', '', 1, 'js', function(err, queueId){
+				if(!err) {
+				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+					if(!err) {
+					    assert.equal(output, null, 'Output should be null');
+					    assert.equal(programStatus, 5, 'Program should not run successfully');
+					}
+					done();
+				    });
+				}
+			    });	
+		    });
+		});
+		describe('Submit a long running Javascript program', function() {
+		    it('Javascript program should fail to run in 1 second, and the status should be set to 4', function(done){
+			    submitProgram('while(true) { console.log("Doomed");}', '', 1, 'js', function(err, queueId){
+				if(!err) {
+				    checkStatusAfterTime(5,queueId, function(err, errorMessage, output, programStatus){
+					if(!err) {
+					    assert.equal(output, null, 'Output should be null');
+					    assert.equal(programStatus, 4, 'Program should timeout');
+					}
+					done();
+				    });
+				}
+			    });	
+		    });
+		}); 
+		describe('Submit a Javascript program that does not accept input, but you supply input anyway', function() {
+		    it('Javascript program should run properly and return status 6', function(done){
+			    submitProgram('var a=5; console.log(a);', '4 6', 1, 'js', function(err, queueId){
+				if(!err) {
+				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+					if(!err) {
+					    assert.equal(output, '5\n', 'Output should be 5');
+					    assert.equal(programStatus, 6, 'Program should run successfully');
+					}
+					done();
+				    });
+				}
+			    });	
+		    });
+		});
+	});
+	
 });
 
