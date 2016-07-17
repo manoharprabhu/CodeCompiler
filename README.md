@@ -85,3 +85,15 @@ Returns the status of the submitted program, result, and error if any.
 | 5 | Program crashed/returned non zero exit value.     |
 | 6 | Program completed running successfully.           |
 ----
+
+#### Running the system tests
+Requirements
+* NodeJS
+* Mocha
+* Endpoint and the Consumer services should be running on local machine
+
+````bash
+cd SystemTest
+npm install
+mocha app.js
+````
