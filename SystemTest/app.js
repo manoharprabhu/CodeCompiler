@@ -65,7 +65,7 @@ describe('System test for codecompiler', function(){
 		    it('C program should run successfully and produce "success" as output and status 6', function(done){
 			    submitProgram('#include<stdio.h>\r\nint main() {printf("success");return 0;}', '', 1, 'c', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    expect(output).to.equal('success');
 					}
@@ -80,7 +80,7 @@ describe('System test for codecompiler', function(){
 		    it('C program should fail compilation and produce 3 as status', function(done){
 			    submitProgram('#include<stdio.h>\r\nint main() {f("success");return 0;}', '', 1, 'c', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    assert.equal(output, null, 'Output should be null');
 					    assert.equal(programStatus, 3, 'Program shoulf not compile successfully');
@@ -113,7 +113,7 @@ describe('System test for codecompiler', function(){
 		    it('C program should return non-zero exit status and program status should be set to 5', function(done){
 			    submitProgram('#include<stdio.h>\r\nint main() {printf("success");return 4;}', '', 1, 'c', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    assert.equal(output, null, 'Output should be null');
 					    assert.equal(programStatus, 5, 'Program should not return 0');
@@ -129,7 +129,7 @@ describe('System test for codecompiler', function(){
 		    it('C program should crash and the program status should be set to 5', function(done){
 			    submitProgram('#include<stdio.h>\r\nint main() {printf("success %d", 1/0);return 0;}', '', 1, 'c', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    assert.equal(output, null, 'Output should be null');
 					    assert.equal(programStatus, 5, 'Program should crash');
@@ -145,7 +145,7 @@ describe('System test for codecompiler', function(){
 		    it('C program should run properly and return status 6', function(done){
 			    submitProgram('#include<stdio.h>\r\nint main() {printf("success");return 0;}', '4 6', 1, 'c', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    assert.equal(output, 'success', 'Output should be success');
 					    assert.equal(programStatus, 6, 'Program should run successfully');
@@ -161,7 +161,7 @@ describe('System test for codecompiler', function(){
 		    it('C program should run properly and return status 6', function(done){
 			    submitProgram('#include<stdio.h>\r\nint main() {int a,b; scanf("%d%d",&a,&b); printf("%d",a*b);return 0;}', '4 6', 1, 'c', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    assert.equal(output, '24', 'Output should be success');
 					    assert.equal(programStatus, 6, 'Program should run successfully');
@@ -179,7 +179,7 @@ describe('System test for codecompiler', function(){
 		    it('Javascript program should run successfully and produce "success" as output and status 6', function(done){
 			    submitProgram('console.log("success")', '', 1, 'js', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    expect(output).to.equal('success\n');
 					}
@@ -193,7 +193,7 @@ describe('System test for codecompiler', function(){
 		    it('JS program should crash on runtime', function(done){
 			    submitProgram('"use strict"; nonExistentObject.run();', '', 1, 'js', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    assert.equal(output, null, 'Output should be null');
 					    assert.equal(programStatus, 5, 'Program should not run successfully');
@@ -223,7 +223,7 @@ describe('System test for codecompiler', function(){
 		    it('Javascript program should run properly and return status 6', function(done){
 			    submitProgram('var a=5; console.log(a);', '4 6', 1, 'js', function(err, queueId){
 				if(!err) {
-				    checkStatusAfterTime(1,queueId, function(err, errorMessage, output, programStatus){
+				    checkStatusAfterTime(3,queueId, function(err, errorMessage, output, programStatus){
 					if(!err) {
 					    assert.equal(output, '5\n', 'Output should be 5');
 					    assert.equal(programStatus, 6, 'Program should run successfully');
