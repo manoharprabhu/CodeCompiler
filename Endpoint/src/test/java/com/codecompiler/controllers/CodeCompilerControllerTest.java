@@ -1,6 +1,8 @@
 package com.codecompiler.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +15,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.codecompiler.services.CodeCompilerService;
 import com.codecompiler.vo.ProgramStatusResponse;
 import com.codecompiler.vo.ProgramSubmitResponse;
+import com.codecompiler.vo.RecentSubmissions;
 import com.codecompiler.vo.Response;
+import com.codecompiler.vo.Submission;
 
 /**
  * Created by Manohar Prabhu on 5/31/2016.
@@ -43,10 +47,34 @@ public class CodeCompilerControllerTest {
         Assert.assertEquals(ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY, response.getData().getProgramStatus());
     }
     
+    @Test
+    public void testPing() {
+    	Assert.assertEquals(codeCompilerController.ping(), "pong");
+    }
+    
+    @Test
+    public void testRecent() {
+    	Mockito.when(codeCompilerService.getRecentSubmissions(0, 5)).thenReturn(mockRecentSubmissions());
+    	Response<RecentSubmissions> response = codeCompilerController.getRecentSubmissions(0, 5);
+    	Assert.assertEquals(response.getData().getSubmissions().size(), 2);
+    	Assert.assertEquals(response.getData().getSubmissions().get(0).getQueueId(), "queueID1");
+    	Assert.assertEquals(response.getData().getSubmissions().get(1).getQueueId(), "queueID2");
+    }
+    
     private Response<ProgramSubmitResponse> mockSubmitResponse() {
     	ProgramSubmitResponse programSubmitResponse = new ProgramSubmitResponse("queueId");
     	Response<ProgramSubmitResponse> response = new Response<ProgramSubmitResponse>(programSubmitResponse);
     	return response;
+    }
+    
+    private Response<RecentSubmissions> mockRecentSubmissions() {
+    	Submission submission1 = new Submission("queueID1", new Date(), 6);
+    	Submission submission2= new Submission("queueID2", new Date(), 6);
+    	List<Submission> submissions = new ArrayList<Submission>();
+    	submissions.add(submission1);
+    	submissions.add(submission2);
+    	RecentSubmissions recentSubmissions = new RecentSubmissions(submissions, -1, 1, 5);
+    	return new Response<RecentSubmissions>(recentSubmissions);
     }
     
     private Response<ProgramStatusResponse> mockStatusResponse() {
