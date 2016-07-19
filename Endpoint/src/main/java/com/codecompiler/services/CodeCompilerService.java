@@ -98,8 +98,8 @@ public class CodeCompilerService {
 		List<ProgramEntity> programEntitiesList = programEntities.getContent();
 		List<Submission> submissions = new ArrayList<Submission>();
 		RecentSubmissions recentSubmissions = new RecentSubmissions(submissions,
-				programEntities.hasPrevious() == true ? pageNumber - 1 : -1,
-				programEntities.hasNext() == true ? pageNumber + 1 : -1, programEntitiesList.size());
+				programEntities.hasPrevious() ? pageNumber - 1 : -1,
+				programEntities.hasNext() ? pageNumber + 1 : -1, programEntitiesList.size());
 		for (ProgramEntity entity : programEntitiesList) {
 			Submission submission = new Submission(entity.getId(), entity.getQueuedTime(), entity.getProgramStatus());
 			submissions.add(submission);
