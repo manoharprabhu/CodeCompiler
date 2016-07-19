@@ -17,7 +17,7 @@ allprojects {
 }
 
 coveralls {
-    jacocoReportPath "${buildDir}/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
+    jacocoReportPath "${buildDir}/reports/jacoco/coverage/coverage.xml"
 }
 
 task codeCoverageReport(type: JacocoReport) {
@@ -32,7 +32,10 @@ task codeCoverageReport(type: JacocoReport) {
     }
 
     reports {
-      xml.enabled true
+      xml {
+          enabled true
+          destination "${buildDir}/reports/jacoco/jacoco.xml"
+      }
       html.enabled true
       html.destination "${buildDir}/reports/jacoco"
       csv.enabled false
