@@ -16,6 +16,10 @@ allprojects {
     }
 }
 
+coveralls {
+    jacocoReportPath "${buildDir}/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
+}
+
 task codeCoverageReport(type: JacocoReport) {
 
     // Gather execution data from all subprojects
