@@ -117,6 +117,20 @@ public class CodeCompilerServiceTest {
 		Assert.assertEquals(response.getData().getPrevPage(), -1);
 		Assert.assertEquals(response.getData().getNextPage(), -1);
 	}
+	
+	@Test
+	public void testRecentSubmissionsPageable() {
+		Page<ProgramEntity> page = Mockito.mock(Page.class);
+		Mockito.when(page.getContent()).thenReturn(mockListProgramEntity().subList(1, 3));
+		Mockito.when(page.hasPrevious()).thenReturn(true);
+		Mockito.when(page.hasNext()).thenReturn(true);
+		Mockito.when(programRepository.findAll(Mockito.any(Pageable.class))).thenReturn(page);
+		
+		Response<RecentSubmissions> response = codeCompilerService.getRecentSubmissions(1, 2);
+		Assert.assertEquals(response.getData().getSubmissions().size(), 2);
+		Assert.assertEquals(response.getData().getPrevPage(), 0);
+		Assert.assertEquals(response.getData().getNextPage(), 2);
+	}
 
 	private List<ProgramEntity> mockListProgramEntity() {
 		List<ProgramEntity> programEntitiesList = new ArrayList<ProgramEntity>();
