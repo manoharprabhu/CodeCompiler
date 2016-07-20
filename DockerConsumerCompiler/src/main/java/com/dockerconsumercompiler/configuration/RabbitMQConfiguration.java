@@ -67,4 +67,10 @@ public class RabbitMQConfiguration {
     public MessageListenerAdapter listenerAdapter(MessageReceiverService receiver) {
         return new MessageListenerAdapter(receiver, METHOD_NAME);
     }
+    
+
+    public void setProgramRepository(ProgramRepository programRepository) {
+		this.programRepository = programRepository;
+	}
+
 }
