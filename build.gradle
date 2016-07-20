@@ -4,10 +4,9 @@ plugins {
 }
 
 allprojects {
-    apply plugin: 'jacoco'
     apply plugin: 'java'
-    apply plugin: 'eclipse'
-    
+    apply plugin: 'jacoco'
+
     sourceCompatibility = 1.7
     targetCompatibility = 1.7    
     

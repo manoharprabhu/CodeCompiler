@@ -10,6 +10,7 @@ buildscript {
 group 'com.codecompiler'
 
 apply plugin: 'java'
+apply plugin: 'eclipse'
 
 dependencies {
     compile project(':common')
@@ -18,7 +19,7 @@ dependencies {
     compile group: 'args4j', name: 'args4j', version: '2.33'
     compile("org.springframework.boot:spring-boot-starter-amqp")
     testCompile("junit:junit")
-    testCompile("org.mockito:mockito-all:1.8.4")
+    testCompile("org.mockito:mockito-all:1.10.19")
 }
 
 apply plugin: 'spring-boot'

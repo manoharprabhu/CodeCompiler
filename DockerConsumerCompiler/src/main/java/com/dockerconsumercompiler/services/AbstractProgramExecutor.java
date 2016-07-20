@@ -15,9 +15,10 @@ public abstract class AbstractProgramExecutor implements Runnable {
 
 	abstract public boolean runProgram();
 
-	public void executeProgram() throws IOException {
+	public Thread executeProgram() throws IOException {
 		Thread thread = new Thread(this);
 		thread.start();
+		return thread;
 	}
 
 	@Override
