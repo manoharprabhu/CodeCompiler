@@ -11,7 +11,7 @@ import com.codecompiler.vo.ProgramEntity;
  */
 public class ProgramExecutorFactoryTest {
 	
-	ProgramExecutorFactory programExecutorFactory = new ProgramExecutorFactory();
+	private ProgramExecutorFactory programExecutorFactory = new ProgramExecutorFactory();
 	@Test
 	public void testGetCProgramExecutor() {
 		Assert.assertEquals(CProgramExecutor.class, programExecutorFactory.getCProgramExecutor("queueId", Mockito.mock(ProgramEntity.class), Mockito.mock(ProgramRepository.class)).getClass());

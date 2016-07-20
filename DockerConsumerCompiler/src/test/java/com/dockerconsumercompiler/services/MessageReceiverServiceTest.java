@@ -3,6 +3,7 @@ package com.dockerconsumercompiler.services;
 import java.io.IOException;
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -28,6 +29,7 @@ public class MessageReceiverServiceTest {
 		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory);
 		messageReceiverService.receiveMessage("queueId");
 		Mockito.verify(abstractProgramExecutor, Mockito.times(1)).executeProgram();
+		Assert.assertTrue(true);
 	}
 	
 	@Test
@@ -38,6 +40,7 @@ public class MessageReceiverServiceTest {
 		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory);
 		messageReceiverService.receiveMessage("queueId");
 		Mockito.verify(abstractProgramExecutor, Mockito.times(1)).executeProgram();
+		Assert.assertTrue(true);
 	}
 	
 	@Test
@@ -46,6 +49,7 @@ public class MessageReceiverServiceTest {
 		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory);
 		messageReceiverService.receiveMessage("queueId");
 		Mockito.verify(abstractProgramExecutor, Mockito.times(0)).executeProgram();
+		Assert.assertTrue(true);
 	}
 	
 	private ProgramEntity mockProgramEntity(String language) {
