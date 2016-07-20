@@ -13,10 +13,12 @@ import com.codecompiler.vo.ProgramEntity;
 public class MessageReceiverService {
     private Logger logger = Logger.getLogger(MessageReceiverService.class.getName());
     private ProgramRepository programRepository;
+    private ProgramExecutorFactory programExecutorFactory;
 
     @Autowired
-    public MessageReceiverService(ProgramRepository programRepository) {
+    public MessageReceiverService(ProgramRepository programRepository, ProgramExecutorFactory programExecutorFactory) {
         this.programRepository = programRepository;
+        this.programExecutorFactory = programExecutorFactory;
     }
 
     public void receiveMessage(String message) throws IOException {
@@ -27,9 +29,9 @@ public class MessageReceiverService {
         }
         AbstractProgramExecutor executor = null;
         if("c".equals(programEntity.getLanguage())) {
-        	executor = ProgramExecutorFactory.getCProgramExecutor(message, programEntity, programRepository);
+        	executor = programExecutorFactory.getCProgramExecutor(message, programEntity, programRepository);
         } else if("js".equals(programEntity.getLanguage())) {
-        	executor = ProgramExecutorFactory.getJSProgramExecutor(message, programEntity, programRepository);
+        	executor = programExecutorFactory.getJSProgramExecutor(message, programEntity, programRepository);
         }
         executor.executeProgram();
     }

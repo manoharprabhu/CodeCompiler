@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.dockerconsumercompiler.services.MessageReceiverService;
+import com.dockerconsumercompiler.services.ProgramExecutorFactory;
 import com.dockerconsumercompiler.services.ProgramRepository;
 
 /**
@@ -28,8 +29,11 @@ public class RabbitMQConfiguration {
 
     @Autowired
     private ProgramRepository programRepository;
+    
+    @Autowired
+    private ProgramExecutorFactory programExecutorFactory;
 
-    @Bean
+	@Bean
     public Queue queue() {
         return new Queue(QUEUE_NAME, false);
     }
@@ -60,7 +64,7 @@ public class RabbitMQConfiguration {
 
     @Bean
     public MessageReceiverService receiver() {
-        return new MessageReceiverService(this.programRepository);
+        return new MessageReceiverService(this.programRepository, this.programExecutorFactory);
     }
 
     @Bean
@@ -71,6 +75,11 @@ public class RabbitMQConfiguration {
 
     public void setProgramRepository(ProgramRepository programRepository) {
 		this.programRepository = programRepository;
+	}
+    
+
+    public void setProgramExecutorFactory(ProgramExecutorFactory programExecutorFactory) {
+		this.programExecutorFactory = programExecutorFactory;
 	}
 
 }
