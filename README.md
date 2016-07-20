@@ -1,6 +1,12 @@
 [![Build Status](https://travis-ci.org/manoharprabhu/CodeCompiler.svg?branch=master)](https://travis-ci.org/manoharprabhu/CodeCompiler)
-[![codecov (Working on it...)](https://codecov.io/gh/manoharprabhu/CodeCompiler/branch/master/graph/badge.svg)](https://codecov.io/gh/manoharprabhu/CodeCompiler)
+
+
+[![codecov](https://codecov.io/gh/manoharprabhu/CodeCompiler/branch/master/graph/badge.svg)](https://codecov.io/gh/manoharprabhu/CodeCompiler) 
+Working on improving the code coverage...
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/56505c57d693478d902980b7d6153ff9)](https://www.codacy.com/app/manoharagent13/CodeCompiler?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=manoharprabhu/CodeCompiler&amp;utm_campaign=Badge_Grade)
+
+
 # CodeCompiler
 A service to run code snippets and get output
 
