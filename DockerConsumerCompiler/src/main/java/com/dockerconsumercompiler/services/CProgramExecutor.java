@@ -75,7 +75,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
         programWriter.close();
 
         // Set program status to PROGRAM_IS_GETTING_PROCESSED = 2;
-        this.updateProgramEntity(programEntity, null, null, ProgramStatusResponse.PROGRAM_IS_GETTING_PROCESSED);
+        this.updateProgramEntity(programEntity, null, null, ProgramStatusResponse.PROGRAM_IS_GETTING_PROCESSED, programRepository);
         return true;
 	}
 	
@@ -91,7 +91,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
             logger.info("Compilation was UNSUCCESSFUL");
             e.printStackTrace();
             // Update database status code to PROGRAM_COMPILATION_ERROR = 3;
-            this.updateProgramEntity(programEntity, Messages.COMPILATION_ERROR, null, ProgramStatusResponse.PROGRAM_COMPILATION_ERROR);
+            this.updateProgramEntity(programEntity, Messages.COMPILATION_ERROR, null, ProgramStatusResponse.PROGRAM_COMPILATION_ERROR, programRepository);
             return false;
         } catch (IOException e) {
             logger.info("Unable to execute the command");
@@ -123,30 +123,24 @@ public class CProgramExecutor extends AbstractProgramExecutor {
         try {
             timedExecutor.setStreamHandler(new PumpStreamHandler(output, null, input));
             timedExecutor.execute(executorCommand);
-            this.updateProgramEntity(programEntity, null, output.toString(), ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY);
+            this.updateProgramEntity(programEntity, null, output.toString(), ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY, programRepository);
         } catch(ExecuteException e) {
             logger.info("Non-zero exit value. The program crashed \\ timedout");
             e.printStackTrace();
             if (watchdog.killedProcess()) {
                 // Update database status code to PROGRAM_EXECUTION_TIMEOUT = 4;
-            	this.updateProgramEntity(programEntity, Messages.DID_NOT_EXECUTE_IN_TIME, null, ProgramStatusResponse.PROGRAM_EXECUTION_TIMEOUT);
+            	this.updateProgramEntity(programEntity, Messages.DID_NOT_EXECUTE_IN_TIME, null, ProgramStatusResponse.PROGRAM_EXECUTION_TIMEOUT, programRepository);
             } else {
                 // Update database status code to PROGRAM_RUNTIME_ERROR = 5;
-            	this.updateProgramEntity(programEntity, Messages.NON_ZERO_EXIT_STATUS, null, ProgramStatusResponse.PROGRAM_RUNTIME_ERROR);
+            	this.updateProgramEntity(programEntity, Messages.NON_ZERO_EXIT_STATUS, null, ProgramStatusResponse.PROGRAM_RUNTIME_ERROR, programRepository);
             }
             return false;
         } catch (IOException e) {
             logger.info("Program did not accept input");
-            this.updateProgramEntity(programEntity, null, output.toString(), ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY);
+            this.updateProgramEntity(programEntity, null, output.toString(), ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY, programRepository);
             return true;
         }
         return true;
 	}
 	
-	public void updateProgramEntity(ProgramEntity programEntity, String errorMessage, String output, int programStatus) {
-		programEntity.setProgramStatus(programStatus);
-		programEntity.setOutput(output);
-		programEntity.setErrorMessage(errorMessage);
-		programRepository.save(programEntity);
-	}
 }

@@ -3,6 +3,8 @@ package com.dockerconsumercompiler.services;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import com.codecompiler.vo.ProgramEntity;
+
 /**
  * Created by Manohar Prabhu on 6/9/2016.
  */
@@ -38,5 +40,12 @@ public abstract class AbstractProgramExecutor implements Runnable {
 		} else {
 			logger.info("Program precompilation failed");
 		}
+	}
+	
+	public void updateProgramEntity(ProgramEntity programEntity, String errorMessage, String output, int programStatus, ProgramRepository programRepository) {
+		programEntity.setProgramStatus(programStatus);
+		programEntity.setOutput(output);
+		programEntity.setErrorMessage(errorMessage);
+		programRepository.save(programEntity);
 	}
 }
