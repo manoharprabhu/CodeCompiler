@@ -14,7 +14,7 @@ public class ProgramExecutorFactoryTest {
 	private ProgramExecutorFactory programExecutorFactory = new ProgramExecutorFactory();
 	@Test
 	public void testGetCProgramExecutor() {
-		Assert.assertEquals(CProgramExecutor.class, programExecutorFactory.getCProgramExecutor("queueId", Mockito.mock(ProgramEntity.class), Mockito.mock(ProgramRepository.class)).getClass());
+		Assert.assertEquals(CProgramExecutor.class, programExecutorFactory.getCProgramExecutor("queueId", Mockito.mock(ProgramEntity.class), Mockito.mock(ProgramRepository.class), Mockito.mock(CommandExecutor.class)).getClass());
 	}
 	
 	@Test

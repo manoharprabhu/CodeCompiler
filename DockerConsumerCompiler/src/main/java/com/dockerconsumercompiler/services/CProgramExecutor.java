@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import org.apache.commons.exec.CommandLine;
@@ -27,53 +25,35 @@ public class CProgramExecutor extends AbstractProgramExecutor {
     private String message;
     private ProgramEntity programEntity;
     private ProgramRepository programRepository;
+    private CommandExecutor commandExecutor;
+    private final String PROGRAM_NAME = "program";
     private Logger logger = Logger.getLogger(CProgramExecutor.class.getName());
 
-    public CProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository) {
+    public CProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository, CommandExecutor commandExecutor) {
         this.message = message;
         this.programEntity = programEntity;
         this.programRepository = programRepository;
+        this.commandExecutor = commandExecutor;
     }
 	@Override
 	public boolean preCompile() {
-		DefaultExecutor defaultExecutor = new DefaultExecutor();
 
         // Make sure GCC is installed for compiling C program
         try {
-            if(defaultExecutor.execute(new CommandLine("gcc").addArgument("-v")) != 0) {
-                logger.info("GCC is not installed");
-                return false;
+            if(!commandExecutor.isGccInstalled()) {
+            	return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-
-        if(!Files.exists(Paths.get(message))) {
-            //Create a temp directory of name queueID
-            CommandLine makeDirectory = new CommandLine("mkdir");
-            makeDirectory.addArgument(message);
-            try {
-                defaultExecutor.execute(makeDirectory);
-            } catch (IOException e) {
-                logger.info("Error while running the command");
-                e.printStackTrace();
-                return false;
-            }
+        if(!commandExecutor.createTempDirectoryIfNotExists(message)) {
+        	return false;
         }
-
         //write the program and input file into this
-        PrintWriter programWriter = null;
-        try {
-            programWriter = new PrintWriter(message + File.separator + "program");
-        } catch (FileNotFoundException e) {
-            logger.info("Unable to open the program file");
-            e.printStackTrace();
-            return false;
+        if(!commandExecutor.writeCProgramToTempDirectory(message, PROGRAM_NAME, programEntity.getProgram())) {
+        	return false;
         }
-        programWriter.write(programEntity.getProgram());
-        programWriter.close();
-
         // Set program status to PROGRAM_IS_GETTING_PROCESSED = 2;
         this.updateProgramEntity(programEntity, null, null, ProgramStatusResponse.PROGRAM_IS_GETTING_PROCESSED, programRepository);
         return true;
@@ -81,26 +61,16 @@ public class CProgramExecutor extends AbstractProgramExecutor {
 	
 	@Override
 	public boolean compile() {
-		DefaultExecutor defaultExecutor = new DefaultExecutor();
-
 		//Compile the program
-        CommandLine compiler = CommandLine.parse("gcc -x c " + message + File.separator + "program" + " -o "+ message + File.separator + "a.out");
-        try {
-            defaultExecutor.execute(compiler);
-        } catch (ExecuteException e) {
-            logger.info("Compilation was UNSUCCESSFUL");
-            e.printStackTrace();
-            // Update database status code to PROGRAM_COMPILATION_ERROR = 3;
+        if(!commandExecutor.compileCProgramAndGenerateBinary(message, PROGRAM_NAME)) {
+        	//Update database status code to PROGRAM_COMPILATION_ERROR = 3;
             this.updateProgramEntity(programEntity, Messages.COMPILATION_ERROR, null, ProgramStatusResponse.PROGRAM_COMPILATION_ERROR, programRepository);
             return false;
-        } catch (IOException e) {
-            logger.info("Unable to execute the command");
-            e.printStackTrace();
-            return false;
+        } else {
+        	return true;
         }
-        
-        return true;
 	}
+	
 	@Override
 	public boolean runProgram() {
 		//If compilation succeeds, run the binary and pipe the input into it

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.dockerconsumercompiler.services.CommandExecutor;
 import com.dockerconsumercompiler.services.MessageReceiverService;
 import com.dockerconsumercompiler.services.ProgramExecutorFactory;
 import com.dockerconsumercompiler.services.ProgramRepository;
@@ -32,6 +33,9 @@ public class RabbitMQConfiguration {
     
     @Autowired
     private ProgramExecutorFactory programExecutorFactory;
+    
+    @Autowired
+    private CommandExecutor commandExecutor;
 
 	@Bean
     public Queue queue() {
@@ -64,7 +68,7 @@ public class RabbitMQConfiguration {
 
     @Bean
     public MessageReceiverService receiver() {
-        return new MessageReceiverService(this.programRepository, this.programExecutorFactory);
+        return new MessageReceiverService(this.programRepository, this.programExecutorFactory, this.commandExecutor);
     }
 
     @Bean
@@ -80,6 +84,10 @@ public class RabbitMQConfiguration {
 
     public void setProgramExecutorFactory(ProgramExecutorFactory programExecutorFactory) {
 		this.programExecutorFactory = programExecutorFactory;
+	}
+    
+	public void setCommandExecutor(CommandExecutor commandExecutor) {
+		this.commandExecutor = commandExecutor;
 	}
 
 }

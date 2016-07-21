@@ -14,19 +14,21 @@ public class MessageReceiverServiceTest {
 	
 	private static ProgramRepository programRepository;
 	private static ProgramExecutorFactory programExecutorFactory;
+	private static CommandExecutor commandExecutor;
 	
 	@BeforeClass
 	public static void init() {
 		 programRepository = Mockito.mock(ProgramRepository.class);
 		 programExecutorFactory = Mockito.mock(ProgramExecutorFactory.class);
+		 commandExecutor = Mockito.mock(CommandExecutor.class);
 	}
 	
 	@Test
 	public void testReceiveMessageForCProgram() throws IOException {
 		AbstractProgramExecutor abstractProgramExecutor = Mockito.mock(AbstractProgramExecutor.class);
 		Mockito.when(programRepository.findByQueueId("queueId")).thenReturn(mockProgramEntity("c"));
-		Mockito.when(programExecutorFactory.getCProgramExecutor(Mockito.anyString(), Mockito.any(ProgramEntity.class), Mockito.any(ProgramRepository.class))).thenReturn(abstractProgramExecutor);
-		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory);
+		Mockito.when(programExecutorFactory.getCProgramExecutor(Mockito.anyString(), Mockito.any(ProgramEntity.class), Mockito.any(ProgramRepository.class), Mockito.any(CommandExecutor.class))).thenReturn(abstractProgramExecutor);
+		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory, commandExecutor);
 		messageReceiverService.receiveMessage("queueId");
 		Mockito.verify(abstractProgramExecutor, Mockito.times(1)).executeProgram();
 		Assert.assertTrue(true);
@@ -37,7 +39,7 @@ public class MessageReceiverServiceTest {
 		AbstractProgramExecutor abstractProgramExecutor = Mockito.mock(AbstractProgramExecutor.class);
 		Mockito.when(programRepository.findByQueueId("queueId")).thenReturn(mockProgramEntity("js"));
 		Mockito.when(programExecutorFactory.getJSProgramExecutor(Mockito.anyString(), Mockito.any(ProgramEntity.class), Mockito.any(ProgramRepository.class))).thenReturn(abstractProgramExecutor);
-		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory);
+		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory, commandExecutor);
 		messageReceiverService.receiveMessage("queueId");
 		Mockito.verify(abstractProgramExecutor, Mockito.times(1)).executeProgram();
 		Assert.assertTrue(true);
@@ -46,7 +48,7 @@ public class MessageReceiverServiceTest {
 	@Test
 	public void testReceiveMessageForUnknownProgram() throws IOException {
 		AbstractProgramExecutor abstractProgramExecutor = Mockito.mock(AbstractProgramExecutor.class);
-		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory);
+		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory, commandExecutor);
 		messageReceiverService.receiveMessage("queueId");
 		Mockito.verify(abstractProgramExecutor, Mockito.times(0)).executeProgram();
 		Assert.assertTrue(true);

@@ -14,11 +14,13 @@ public class MessageReceiverService {
     private Logger logger = Logger.getLogger(MessageReceiverService.class.getName());
     private ProgramRepository programRepository;
     private ProgramExecutorFactory programExecutorFactory;
+    private CommandExecutor commandExecutor;
 
     @Autowired
-    public MessageReceiverService(ProgramRepository programRepository, ProgramExecutorFactory programExecutorFactory) {
+    public MessageReceiverService(ProgramRepository programRepository, ProgramExecutorFactory programExecutorFactory, CommandExecutor commandExecutor) {
         this.programRepository = programRepository;
         this.programExecutorFactory = programExecutorFactory;
+        this.commandExecutor = commandExecutor;
     }
 
     public void receiveMessage(String message) throws IOException {
@@ -29,7 +31,7 @@ public class MessageReceiverService {
         }
         AbstractProgramExecutor executor = null;
         if("c".equals(programEntity.getLanguage())) {
-        	executor = programExecutorFactory.getCProgramExecutor(message, programEntity, programRepository);
+        	executor = programExecutorFactory.getCProgramExecutor(message, programEntity, programRepository, commandExecutor);
         } else if("js".equals(programEntity.getLanguage())) {
         	executor = programExecutorFactory.getJSProgramExecutor(message, programEntity, programRepository);
         }
