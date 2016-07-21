@@ -17,7 +17,7 @@ public class ProgramExecutorFactory {
         return new CProgramExecutor(message, programEntity, programRepository, commandExecutor);
     }
     
-    public AbstractProgramExecutor getJSProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository) {
-        return new JavascriptExecutor(message, programEntity, programRepository);
+    public AbstractProgramExecutor getJSProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository, CommandExecutor commandExecutor) {
+        return new JavascriptExecutor(message, programEntity, programRepository, commandExecutor);
     }
 }

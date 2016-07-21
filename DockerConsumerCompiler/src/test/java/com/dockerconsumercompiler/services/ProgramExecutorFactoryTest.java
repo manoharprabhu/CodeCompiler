@@ -19,6 +19,6 @@ public class ProgramExecutorFactoryTest {
 	
 	@Test
 	public void testGetJSProgramExecutor() {
-		Assert.assertEquals(JavascriptExecutor.class, programExecutorFactory.getJSProgramExecutor("queueId", Mockito.mock(ProgramEntity.class), Mockito.mock(ProgramRepository.class)).getClass());
+		Assert.assertEquals(JavascriptExecutor.class, programExecutorFactory.getJSProgramExecutor("queueId", Mockito.mock(ProgramEntity.class), Mockito.mock(ProgramRepository.class), Mockito.mock(CommandExecutor.class)).getClass());
 	}
 }

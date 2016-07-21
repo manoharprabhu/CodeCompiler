@@ -38,7 +38,7 @@ public class MessageReceiverServiceTest {
 	public void testReceiveMessageForJSProgram() throws IOException {
 		AbstractProgramExecutor abstractProgramExecutor = Mockito.mock(AbstractProgramExecutor.class);
 		Mockito.when(programRepository.findByQueueId("queueId")).thenReturn(mockProgramEntity("js"));
-		Mockito.when(programExecutorFactory.getJSProgramExecutor(Mockito.anyString(), Mockito.any(ProgramEntity.class), Mockito.any(ProgramRepository.class))).thenReturn(abstractProgramExecutor);
+		Mockito.when(programExecutorFactory.getJSProgramExecutor(Mockito.anyString(), Mockito.any(ProgramEntity.class), Mockito.any(ProgramRepository.class), Mockito.any(CommandExecutor.class))).thenReturn(abstractProgramExecutor);
 		MessageReceiverService messageReceiverService = new MessageReceiverService(programRepository, programExecutorFactory, commandExecutor);
 		messageReceiverService.receiveMessage("queueId");
 		Mockito.verify(abstractProgramExecutor, Mockito.times(1)).executeProgram();
