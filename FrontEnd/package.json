@@ -1,0 +1,28 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "frontend for codecompiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manoharprabhu/codecompiler.git"
+  },
+  "keywords": [
+    "codecompiler",
+    "frontend"
+  ],
+  "author": "Manohar Prabhu B",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manoharprabhu/codecompiler/issues"
+  },
+  "homepage": "https://github.com/manoharprabhu/codecompiler#readme",
+  "devDependencies": {
+    "gulp-minify-css": "^1.2.4",
+    "gulp-uglify": "^1.5.4",
+    "gulp-usemin": "^0.3.23"
+  }
+}

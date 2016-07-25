@@ -1,0 +1,26 @@
+{
+  "name": "FrontEnd",
+  "homepage": "https://github.com/manoharprabhu/CodeCompiler",
+  "authors": [
+    "Manohar Prabhu <manoharagent13@gmail.com>"
+  ],
+  "description": "Frontend for codecompiler",
+  "main": "src/index.html",
+  "keywords": [
+    "codecompiler",
+    "frontend"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
