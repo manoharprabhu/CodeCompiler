@@ -21,6 +21,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "ace-builds": "^1.2.3"
   }
 }
