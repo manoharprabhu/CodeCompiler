@@ -27,4 +27,6 @@ gulp.task("copyacethemes", function(){
 
 gulp.task("watch", function() {
 	gulp.watch("src/**/*.js", ["minify"]);
+    gulp.watch("src/**/*.html", ["minify"]);
+    gulp.watch("src/**/*.css", ["minify"]);
 });

@@ -1,17 +1,46 @@
 <html>
-	<head>
-		<!-- build:css /css/site.css -->
-		<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-		<!-- endbuild -->
-	</head>
-	<body>
-		<!-- build:js /js/site.js -->
-		<script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
-		<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-		<script type="text/javascript" src="/bower_components/ace-builds/src-min/ace.js"></script>
-		<script type="text/javascript" src="/bower_components/ace-builds/src-min/theme-terminal.js"></script>
-		<script type="text/javascript" src="/js/index.js"></script>
-		<!-- endbuild -->
-	</body>
+    <head>
+        <!-- build:css /css/site.css -->
+        <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="/css/index.css" rel="stylesheet">
+        <!-- endbuild -->
+    </head>
+    <body>
+        <div class="container">
+            <div class="row title-text">
+                <h2>CodeCompiler</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <div class="row editor-wrapper">
+                        <div class="row banner-top">
+                            <div class="col-md-4 text-center"><h4>Write your program here</h4></div>
+                            <div class="col-md-5"></div>
+                            <div class="col-md-3">
+                                <select class="selectpicker form-control">
+                                    <option value="c">C</option>
+                                    <option value="js">Javascript</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="editor"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2"></div>
+            </div>
+        </div>
+        <!-- build:js /js/site.js -->
+        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script type="text/javascript" src="/bower_components/ace-builds/src-min/ace.js"></script>
+        <script type="text/javascript" src="/bower_components/ace-builds/src-min/theme-terminal.js"></script>
+        <script type="text/javascript" src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="/js/index.js"></script>
+        <!-- endbuild -->
+    </body>
 </html>
