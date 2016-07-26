@@ -22,10 +22,10 @@ var checkEndpointService = function(callback) {
 
 var submitProgram = function(program, input, timeout, language, callback) {
     var data = {
-	program: program,
-	input: input,
-	timeout: timeout,
-	language: language
+	program,
+	input,
+	timeout,
+	language
     };
     request.post({url: SUBMIT_PROGRAM_URL, form: data}, function(err, httpResponse, body){
         if(err) {
@@ -69,7 +69,7 @@ describe("System test for codecompiler", function(){
 					if(!err) {
 					    expect(output).to.equal("success");
 					}
-					done()
+					done();
 				    });
 				}
 			    });	
