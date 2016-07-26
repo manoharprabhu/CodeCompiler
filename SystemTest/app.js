@@ -183,7 +183,7 @@ describe("System test for codecompiler", function(){
 					if(!err) {
 					    expect(output).to.equal("success\n");
 					}
-					done()
+					done();
 				    });
 				}
 			    });	

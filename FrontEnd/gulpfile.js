@@ -3,7 +3,7 @@ var usemin = require("gulp-usemin");
 var uglify = require("gulp-uglify");
 var minifyCss = require("gulp-minify-css");
 
-gulp.task("default", ["minify", "copyfonts", "copyacethemes"]);
+gulp.task("default", ["minify", "copyfonts", "copyacethemes", "watch"]);
 
 gulp.task("minify", function(){
     gulp.src("src/index.html")
@@ -23,4 +23,8 @@ gulp.task("copyfonts", function(){
 gulp.task("copyacethemes", function(){
     gulp.src("src/bower_components/ace-builds/src-min/**/*.js")
         .pipe(gulp.dest("public/js"));
+});
+
+gulp.task("watch", function() {
+	gulp.watch("src/**/*.js", ["minify"]);
 });
