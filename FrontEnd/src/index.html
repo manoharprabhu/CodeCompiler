@@ -20,20 +20,42 @@
                             <div class="col-md-4 text-center"><h4>Write your program here</h4></div>
                             <div class="col-md-5"></div>
                             <div class="col-md-3">
-                                <select class="selectpicker form-control">
+                                <select id="program-language" class="selectpicker form-control">
                                     <option value="c">C</option>
                                     <option value="js">Javascript</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row">
-                            <div id="editor"></div>
+                            <div id="program-editor"></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-2 col-xs-2"></div>
             </div>
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2"></div>
+				<div class="col-md-8 col-sm-8 col-xs-8">
+                    <div class="row editor-wrapper">
+                        <div class="row banner-top">
+                            <div class="col-md-4 text-center"><h4>Input for the program</h4></div>
+                        </div>
+                        <div class="row">
+                            <div id="input-editor"></div>
+                        </div>
+                    </div>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2"></div>
+				<div class="col-md-8 col-sm-8 col-xs-8">
+                    <button class="btn submit-button" value="Submit" onclick="app.submitProgramToServer()">Submit</button>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2"></div>
+			</div>
         </div>
+
         <!-- build:js /js/site.js -->
         <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
         <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>

@@ -2,8 +2,9 @@ var gulp = require("gulp");
 var usemin = require("gulp-usemin");
 var uglify = require("gulp-uglify");
 var minifyCss = require("gulp-minify-css");
+var connect = require('gulp-connect');
 
-gulp.task("default", ["minify", "copyfonts", "copyacethemes", "watch"]);
+gulp.task("default", ["copyfonts", "copyacethemes", "minify", "watch", "connect"]);
 
 gulp.task("minify", function(){
     gulp.src("src/index.html")
@@ -12,7 +13,15 @@ gulp.task("minify", function(){
         css: [minifyCss(), "concat"],
         js: [uglify(), "concat"]
     }))
-    .pipe(gulp.dest("public"));
+    .pipe(gulp.dest("public"))
+    .pipe(connect.reload());
+});
+
+gulp.task('connect', function() {
+    connect.server({
+        root: 'public',
+        livereload: true
+    });
 });
 
 gulp.task("copyfonts", function(){
