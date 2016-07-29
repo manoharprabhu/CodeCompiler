@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.codecompiler.services.CodeCompilerService;
 import com.codecompiler.vo.Response;
@@ -12,6 +13,7 @@ import com.codecompiler.vo.Response;
 /**
  * Created by Manohar Prabhu on 5/28/2016.
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/codecompiler")
 public class CodeCompilerController {
