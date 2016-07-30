@@ -7,11 +7,11 @@ var connect = require('gulp-connect');
 gulp.task("default", ["copyfonts", "copyacethemes", "minify", "watch", "connect"]);
 
 gulp.task("minify", function(){
-    gulp.src("src/index.html")
+    gulp.src("./src/*.html")
     .pipe(usemin({
         assetsDir: "src",
-        css: [minifyCss(), "concat"],
-        js: [uglify(), "concat"]
+        css: [minifyCss, "concat"],
+        js: [uglify, "concat"]
     }))
     .pipe(gulp.dest("public"))
     .pipe(connect.reload());
@@ -35,5 +35,5 @@ gulp.task("copyacethemes", function(){
 });
 
 gulp.task("watch", function() {
-	gulp.watch(["src/js/*.js", "src/index.html", "src/css/*.css"], ["minify"]);
+	gulp.watch(["src/js/*.js", "src/*.html", "src/css/*.css"], ["minify"]);
 });

@@ -1,17 +1,20 @@
+<!DOCTYPE html>
 <html>
     <head>
-        <!-- build:css /css/site.css -->
+        <!-- build:css /css/index.css -->
         <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+		<link href="/bower_components/sweetalert/dist/sweetalert.css" rel="stylesheet">
+		<link href="/bower_components/ladda/dist/ladda.min.css" rel="stylesheet">
         <link href="/css/index.css" rel="stylesheet">
         <!-- endbuild -->
     </head>
-    <body>
-        <div class="container">
-            <div class="row title-text">
+    <body onload="app.initializeEditor()">
+		<div class="row title-text">
                 <h2>CodeCompiler</h2>
-            </div>
+        </div>
+        <div class="container">
             <div class="row">
                 <div class="col-md-2 col-sm-2 col-xs-2"></div>
                 <div class="col-md-8 col-sm-8 col-xs-8">
@@ -49,19 +52,29 @@
 			</div>
 			<div class="row">
 				<div class="col-md-2 col-sm-2 col-xs-2"></div>
-				<div class="col-md-8 col-sm-8 col-xs-8">
-                    <button class="btn submit-button" value="Submit" onclick="app.submitProgramToServer()">Submit</button>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+                    <button class="submit-button ladda-button" data-style="expand-right" data-spinner-size="20" value="Submit" onclick="app.submitProgramToServer()">Submit</button>
 				</div>
+			</div>
+			<div class="row">
+				<br />
+			</div>
+			<div class="row">
 				<div class="col-md-2 col-sm-2 col-xs-2"></div>
+				<div class="col-md-10 col-sm-10 col-xs-10">
+                    <a href="/submissions.html" class="recent-sub-link" >View Recent Submissions</a>
+				</div>
 			</div>
         </div>
-
-        <!-- build:js /js/site.js -->
+        <!-- build:js /js/index.js -->
         <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
         <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="/bower_components/ace-builds/src-min/ace.js"></script>
         <script type="text/javascript" src="/bower_components/ace-builds/src-min/theme-terminal.js"></script>
         <script type="text/javascript" src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+		<script type="text/javscript" src="/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+		<script type="text/javscript" src="/bower_components/ladda/dist/spin.min.js"></script>
+		<script type="text/javscript" src="/bower_components/ladda/dist/ladda.min.js"></script>
         <script type="text/javascript" src="/js/index.js"></script>
         <!-- endbuild -->
     </body>

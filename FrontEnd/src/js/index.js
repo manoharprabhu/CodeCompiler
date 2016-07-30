@@ -4,11 +4,12 @@ var app = (function() {
     var programEditor;
     var inputEditor;
     var serverHost = "localhost";
-    var serverPort = "8080";
+    var serverPort = "8081";
     var serverSubmitEndpoint = "/codecompiler/submit";
     var serverProgramStatusEndpoint = "/codecompiler/status";
     var serverProgramSubmitURL = "http://" + serverHost + ":" + serverPort + serverSubmitEndpoint;
     var $programLanguage = $("#program-language");
+    var ladda = Ladda.create(document.querySelector(".submit-button"));
 
     var setEditorLanguage = function(language) {
         if(language === "c") {
@@ -19,7 +20,7 @@ var app = (function() {
     };
 
     var getSelectedLanguage = function() {
-        return $programLanguage.find('option:selected').val();
+        return $programLanguage.find("option:selected").val();
     }
     
     var initializeEditor = function() {
@@ -35,15 +36,35 @@ var app = (function() {
     };
 
     var programSubmitSuccess = function(data) {
-
+        ladda.stop();
+        sweetAlert({
+            title: "Success",
+            type: "success",
+            text: "Your program ID is <br /><strong>" + data.data.queueId + "</strong>",
+            html: true 
+        });
     };
 
     var programSubmitFailure = function() {
+        ladda.stop();
+        sweetAlert("Error", "Could not submit your request. Please try again later.", "error");
+    };
 
+    var validateInputs = function() {
+        var programText = programEditor.getValue().trim();
+        if(programText === "") {
+            return false;
+        }
+        return true;
     };
 
     var submitProgramToServer = function() {
+        if(!validateInputs()) {
+            sweetAlert("Error", "You forgot to write the program.", "error");
+            return;
+        }
         var selectedLanguage = getSelectedLanguage();
+        ladda.start();
         $.ajax({
             url: serverProgramSubmitURL,
             method: "POST",
@@ -54,15 +75,14 @@ var app = (function() {
                 language: selectedLanguage
             },
         }).done(function(data) {
-            programSubmitSuccess(data);
+            setTimeout(function() { programSubmitSuccess(data); }, 1000);
         }).fail(function() {
-            programSubmitFailure();
+            setTimeout(function() { programSubmitFailure(); }, 1000);
         });
     };
 
-    initializeEditor();
-
     return {
+        "initializeEditor": initializeEditor,
         "submitProgramToServer": submitProgramToServer 
     };
 }());
