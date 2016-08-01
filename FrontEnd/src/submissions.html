@@ -4,6 +4,7 @@
         <!-- build:css /css/submissions.css -->
         <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="/css/index.css" rel="stylesheet">
         <!-- endbuild -->
     </head>
@@ -12,11 +13,31 @@
                 <h2>CodeCompiler</h2>
         </div>
         <div class="container">
-            <div id="submissions-wrapper"></div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2"></div>
+                <div class="col-md-8 col-sm-8 ">
+                    <div class="submission-wrapper">
+                        <table id="submissions" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Submitted At</th>
+                                    <th>Queue ID</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2"></div>
+            </div>
         </div>
         <!-- build:js /js/submissions.js -->
         <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
         <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script type="text/javascript" src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="/js/datetime-moment.js"></script>
         <script type="text/javascript" src="/js/submissions.js"></script>
         <!-- endbuild -->
     </body>

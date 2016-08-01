@@ -3,11 +3,31 @@ var submissions = (function() {
     var serverPort = "8081";
     var serverRecentSubmissionEndpoint = "/codecompiler/recent";
     var serverRecentSubmissionURL = "http://" + serverHost + ":" + serverPort + serverRecentSubmissionEndpoint;
-    var $submissionsWrapper = $("#submissions-wrapper");
+    $.fn.dataTable.moment("M/D/YYYY H:mm");
+    
+    var transformAjaxData = function(data) {
+        var result = [];
+        data.data.submissions.forEach(function(item) {
+            var row = [];
+            row.push(item.queueId);
+            row.push(item.status);
+            row.push(moment(item.submittedTime).format("M/D/YYYY H:mm"));
+            result.push(row);
+        });
+        return result;
+    };
     
     var drawData = function(data) {
-        $submissionsWrapper.empty();
-        /*TODO: Fill datatable here*/
+        var result = transformAjaxData(data);
+        $('#submissions').DataTable({
+            data: result,
+            columns: [
+                {"title": "Queue Id"},
+                {"title": "Status"},
+                {"title": "Submitted At"}
+            ],
+            "order": [[ 2, "desc" ]]
+        });
     };
 
     var loadDataForPage = function(page) {
@@ -16,7 +36,7 @@ var submissions = (function() {
             "method": "GET",
             "data": {
                 "pageNumber": page,
-                "rowSize": 10
+                "rowSize": 100
             }
         }).done(function(data) {
             drawData(data);
@@ -28,5 +48,5 @@ var submissions = (function() {
 
     return {
         "loadDataForPage": loadDataForPage
-    }
+    };
 }());

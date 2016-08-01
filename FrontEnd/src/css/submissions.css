@@ -1,3 +1,8 @@
 html {
     overflow-x: hidden;
 }
+
+.submission-wrapper {
+    padding: 10px;
+    margin-top: 10px;
+}

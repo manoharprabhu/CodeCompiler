@@ -101,7 +101,7 @@ public class CodeCompilerService {
 				programEntities.hasPrevious() ? pageNumber - 1 : -1,
 				programEntities.hasNext() ? pageNumber + 1 : -1, programEntitiesList.size());
 		for (ProgramEntity entity : programEntitiesList) {
-			Submission submission = new Submission(entity.getId(), entity.getQueuedTime(), entity.getProgramStatus());
+			Submission submission = new Submission(entity.getQueueId(), entity.getQueuedTime(), entity.getProgramStatus());
 			submissions.add(submission);
 		}
 		return new Response<RecentSubmissions>(recentSubmissions);
