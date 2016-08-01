@@ -12,6 +12,7 @@ var submissions = (function() {
             row.push(item.queueId);
             row.push(item.status);
             row.push(moment(item.submittedTime).format("M/D/YYYY H:mm"));
+            row.push("");
             result.push(row);
         });
         return result;
@@ -24,10 +25,22 @@ var submissions = (function() {
             columns: [
                 {"title": "Queue Id"},
                 {"title": "Status"},
-                {"title": "Submitted At"}
+                {"title": "Submitted At"},
+                {"title": "Output"}
+            ],
+            "columnDefs": [
+                {
+                    "className": "dt-body-center",
+                    "targets": [0, 1, 2, 3]
+                }
             ],
             "order": [[ 2, "desc" ]],
             "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                if(aData[1] === 6) {
+                    $("td:eq(3)", nRow).html("<a href='#' class='valid-output'>Show Output</a>");
+                } else if(aData[1] === 0 || aData[1] === 3 || aData[1] === 4 || aData[1] === 5) {
+                    $("td:eq(3)", nRow).html("<a href='#' class='error-output'>Show Error</a>");
+                }
                 if(aData[1] === 6) {
                     $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-ok tick-green'></span>");
                 } else if(aData[1] === 1 || aData[1] === 2) {

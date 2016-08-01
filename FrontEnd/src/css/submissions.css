@@ -18,3 +18,15 @@ html {
 .warning-yellow {
     color: #f39c12;
 }
+
+.valid-output {
+    color: #2ecc71
+}
+
+.error-output {
+    color: #c0392b;
+}
+
+.dt-body-center {
+    text-align: center;
+}
