@@ -6,3 +6,15 @@ html {
     padding: 10px;
     margin-top: 10px;
 }
+
+.tick-green {
+    color: #2ecc71;
+}
+
+.cross-red {
+    color: #c0392b;
+}
+
+.warning-yellow {
+    color: #f39c12;
+}

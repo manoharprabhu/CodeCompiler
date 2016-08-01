@@ -16,7 +16,7 @@ var submissions = (function() {
         });
         return result;
     };
-    
+
     var drawData = function(data) {
         var result = transformAjaxData(data);
         $('#submissions').DataTable({
@@ -26,7 +26,18 @@ var submissions = (function() {
                 {"title": "Status"},
                 {"title": "Submitted At"}
             ],
-            "order": [[ 2, "desc" ]]
+            "order": [[ 2, "desc" ]],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                if(aData[1] === 6) {
+                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-ok tick-green'></span>");
+                } else if(aData[1] === 1 || aData[1] === 2) {
+                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-time'></span>");
+                } else if(aData[1] === 3 || aData[1] === 4 || aData[1] === 5) {
+                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-remove cross-red'></span>");
+                } else {
+                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-warning-sign warning-yellow'></span>");
+                }
+            }
         });
     };
 
@@ -42,7 +53,16 @@ var submissions = (function() {
             drawData(data);
         })
         .fail(function() {
-            alert("Error while fetching the recent submissions");
+            sweetAlert({
+                title: "Error",
+                text: "Error while getting the recent submissions. Please try again later.",
+                type: "error",
+                confirmButtonText: "Reload",
+                showCancelButton: true
+            },
+            function() {
+                    window.location = "/submissions.html";
+            });
         });
     };
 

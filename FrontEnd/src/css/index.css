@@ -13,6 +13,8 @@ html {
     color: #FFFFFF;
     line-height: 80px;
     text-align: center;
+    border-bottom: 4px solid #00993e;
+    box-sizing: border-box;
 }
 
 #input-editor {
