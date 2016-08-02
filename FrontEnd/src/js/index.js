@@ -1,6 +1,6 @@
 /*globals ace:false */
 var app = (function() {
-	"use strict";
+    "use strict";
     var programEditor;
     var inputEditor;
     var serverHost = "localhost";
@@ -12,9 +12,9 @@ var app = (function() {
     var ladda = Ladda.create(document.querySelector(".submit-button"));
 
     var setEditorLanguage = function(language) {
-        if(language === "c") {
+        if (language === "c") {
             programEditor.getSession().setMode("ace/mode/c_cpp");
-        } else if(language === "js") {
+        } else if (language === "js") {
             programEditor.getSession().setMode("ace/mode/javascript");
         }
     };
@@ -22,7 +22,7 @@ var app = (function() {
     var getSelectedLanguage = function() {
         return $programLanguage.find("option:selected").val();
     }
-    
+
     var initializeEditor = function() {
         ace.config.set("basePath", "/js");
         programEditor = ace.edit("program-editor");
@@ -41,7 +41,9 @@ var app = (function() {
             title: "Success",
             type: "success",
             text: "Your program ID is <br /><strong>" + data.data.queueId + "</strong>",
-            html: true 
+            html: true
+        }, function() {
+            window.location = "/result.html?queueId=" + data.data.queueId;
         });
     };
 
@@ -52,14 +54,14 @@ var app = (function() {
 
     var validateInputs = function() {
         var programText = programEditor.getValue().trim();
-        if(programText === "") {
+        if (programText === "") {
             return false;
         }
         return true;
     };
 
     var submitProgramToServer = function() {
-        if(!validateInputs()) {
+        if (!validateInputs()) {
             sweetAlert("Error", "You forgot to write the program.", "error");
             return;
         }
@@ -81,8 +83,10 @@ var app = (function() {
         });
     };
 
+    initializeEditor();
+
     return {
         "initializeEditor": initializeEditor,
-        "submitProgramToServer": submitProgramToServer 
+        "submitProgramToServer": submitProgramToServer
     };
 }());

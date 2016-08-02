@@ -30,3 +30,8 @@ html {
 .dt-body-center {
     text-align: center;
 }
+
+#submissions th {
+    background-color: #2ecc71;
+    color: #FFFFFF;
+}
