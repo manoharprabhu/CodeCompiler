@@ -1,4 +1,4 @@
-/*globals ace:false */
+/*global ace, sweetAlert, CODECOMPILER_CONFIG, Ladda */
 var app = (function() {
     "use strict";
     var programEditor;
@@ -16,10 +16,15 @@ var app = (function() {
 
     var getSelectedLanguage = function() {
         return $programLanguage.find("option:selected").val();
-    }
+    };
 
     var initializeEditor = function() {
-        sweetAlert("Loading", "Please wait...", "info");
+        sweetAlert({
+            "title": "Loading",
+            "type": "info",
+            "text": "Please wait...",
+            "showConfirmButton": false
+        });
         ace.config.set("basePath", "/js");
         programEditor = ace.edit("program-editor");
         programEditor.setTheme("ace/theme/terminal");
@@ -30,8 +35,8 @@ var app = (function() {
         });
         $programLanguage.trigger("change");
 
-        programEditor.renderer.on('afterRender', function() {
-            sweetAlert.close();
+        programEditor.renderer.on("afterRender", function() {
+            setTimeout(function() { sweetAlert.close() }, 1000);
         });
     };
 

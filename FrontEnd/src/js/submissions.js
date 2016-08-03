@@ -1,3 +1,4 @@
+/*global $, moment, CODECOMPILER_CONFIG */
 var submissions = (function() {
     var statusToMessageMap = {
         1: "Program in queue",
@@ -23,7 +24,7 @@ var submissions = (function() {
 
     var drawData = function(data) {
         var result = transformAjaxData(data);
-        $('#submissions').DataTable({
+        $("#submissions").DataTable({
             data: result,
             columns: [
                 { "title": "ID" },
