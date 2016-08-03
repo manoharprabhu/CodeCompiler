@@ -60,6 +60,12 @@ var submissions = (function() {
     };
 
     var loadDataForPage = function(page) {
+        sweetAlert({
+            title: "Getting the recent submissions...",
+            type: "info",
+            text: "Please wait!",
+            showConfirmButton: false
+        });
         $.ajax({
                 "url": CODECOMPILER_CONFIG.serverRecentSubmissionURL,
                 "method": "GET",
@@ -68,6 +74,7 @@ var submissions = (function() {
                     "rowSize": 100
                 }
             }).done(function(data) {
+                sweetAlert.close();
                 drawData(data);
             })
             .fail(function() {
@@ -78,8 +85,12 @@ var submissions = (function() {
                         confirmButtonText: "Reload",
                         showCancelButton: true
                     },
-                    function() {
-                        window.location = "/submissions.html";
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            window.location = "/submissions.html";
+                        } else {
+                            window.location = "/index.html";
+                        }
                     });
             });
     };

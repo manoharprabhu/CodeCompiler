@@ -19,6 +19,7 @@ var app = (function() {
     }
 
     var initializeEditor = function() {
+        sweetAlert("Loading", "Please wait...", "info");
         ace.config.set("basePath", "/js");
         programEditor = ace.edit("program-editor");
         programEditor.setTheme("ace/theme/terminal");
@@ -28,6 +29,10 @@ var app = (function() {
             setEditorLanguage(getSelectedLanguage());
         });
         $programLanguage.trigger("change");
+
+        programEditor.renderer.on('afterRender', function() {
+            sweetAlert.close();
+        });
     };
 
     var programSubmitSuccess = function(data) {
