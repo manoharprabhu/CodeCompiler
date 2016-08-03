@@ -1,8 +1,4 @@
 var submissions = (function() {
-    var serverHost = "localhost";
-    var serverPort = "8081";
-    var serverRecentSubmissionEndpoint = "/codecompiler/recent";
-    var serverRecentSubmissionURL = "http://" + serverHost + ":" + serverPort + serverRecentSubmissionEndpoint;
     var statusToMessageMap = {
         1: "Program in queue",
         2: "Program in queue",
@@ -65,7 +61,7 @@ var submissions = (function() {
 
     var loadDataForPage = function(page) {
         $.ajax({
-                "url": serverRecentSubmissionURL,
+                "url": CODECOMPILER_CONFIG.serverRecentSubmissionURL,
                 "method": "GET",
                 "data": {
                     "pageNumber": page,

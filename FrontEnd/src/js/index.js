@@ -3,11 +3,6 @@ var app = (function() {
     "use strict";
     var programEditor;
     var inputEditor;
-    var serverHost = "localhost";
-    var serverPort = "8081";
-    var serverSubmitEndpoint = "/codecompiler/submit";
-    var serverProgramStatusEndpoint = "/codecompiler/status";
-    var serverProgramSubmitURL = "http://" + serverHost + ":" + serverPort + serverSubmitEndpoint;
     var $programLanguage = $("#program-language");
     var ladda = Ladda.create(document.querySelector(".submit-button"));
 
@@ -68,7 +63,7 @@ var app = (function() {
         var selectedLanguage = getSelectedLanguage();
         ladda.start();
         $.ajax({
-            url: serverProgramSubmitURL,
+            url: CODECOMPILER_CONFIG.serverProgramSubmitURL,
             method: "POST",
             data: {
                 program: programEditor.getValue(),

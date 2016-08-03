@@ -1,8 +1,4 @@
 var result = (function() {
-    var serverHost = "localhost";
-    var serverPort = "8081";
-    var serverProgramStatusEndpoint = "/codecompiler/status";
-
     var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
@@ -14,8 +10,6 @@ var result = (function() {
         }
         return (false);
     };
-
-    var serverProgramStatusURL = "http://" + serverHost + ":" + serverPort + serverProgramStatusEndpoint + "?queueId=" + getQueryVariable("queueId");
 
     var downloadVariableAsFile = function(v) {
         var hiddenElement = document.createElement('a');
@@ -65,7 +59,7 @@ var result = (function() {
 
     var initialize = function() {
         $.ajax({
-            "url": serverProgramStatusURL,
+            "url": CODECOMPILER_CONFIG.serverProgramStatusURL + "?queueId=" + getQueryVariable("queueId"),
             "method": "GET",
         }).done(function(data) {
             updateResultOnScreen(data);

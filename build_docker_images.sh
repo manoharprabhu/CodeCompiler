@@ -2,22 +2,16 @@
 
 #Generate the JAR files from endpoint service
 
-echo "Building Endpoint JAR..."
-GENERATE_ENDPOINT=`./Endpoint/gradlew -q -p Endpoint/ clean build`
-rc=$?; if [[ $rc != 0 ]]; then echo "Could not build the endpoint JAR"; exit $rc; fi
-echo "Endpoint JAR built"
+echo "Building Endpoint and Consumer JAR..."
+GENERATE=`./gradlew clean build`
+rc=$?; if [[ $rc != 0 ]]; then echo "Could not build the endpoint and consumer JAR"; exit $rc; fi
+echo "Endpoint and Consumer JAR built"
 
 #Build codecompiler endpoint service here
 echo "Building Endpoint docker image..."
 ENDPOINT_BUILD=`docker build -t manoharprabhu/codecompiler-endpoint ./Endpoint/`
 rc=$?; if [[ $rc != 0 ]]; then echo "Could not build the endpoint image properly"; exit $rc; fi
 echo "Built Endpoint docker image successfully"
-
-#Generate the JAR files from consumer service
-echo "Building Consumer JAR..."
-GENERATE_CONSUMER=`./DockerConsumerCompiler/gradlew -q -p DockerConsumerCompiler/ clean build`
-rc=$?; if [[ $rc != 0 ]]; then echo "Could not build the consumer JAR"; exit $rc; fi
-echo "Consumer JAR built"
 
 #Build codecompiler consumer service here
 echo "Building Consumer docker image..."
