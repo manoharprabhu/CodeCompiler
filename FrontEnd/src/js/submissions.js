@@ -3,6 +3,13 @@ var submissions = (function() {
     var serverPort = "8081";
     var serverRecentSubmissionEndpoint = "/codecompiler/recent";
     var serverRecentSubmissionURL = "http://" + serverHost + ":" + serverPort + serverRecentSubmissionEndpoint;
+    var statusToMessageMap = {
+        1: "Program in queue",
+        2: "Program in queue",
+        3: "Compilation error",
+        4: "Program timed out",
+        5: "Runtime error"
+    };
     $.fn.dataTable.moment("M/D/YYYY H:mm");
 
     var transformAjaxData = function(data) {
@@ -23,7 +30,7 @@ var submissions = (function() {
         $('#submissions').DataTable({
             data: result,
             columns: [
-                { "title": "Queue Id" },
+                { "title": "ID" },
                 { "title": "Status" },
                 { "title": "Submitted At" },
                 { "title": "Output" }
@@ -44,11 +51,11 @@ var submissions = (function() {
                 }
 
                 if (aData[1] === 6) {
-                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-ok tick-green'></span>");
+                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-ok tick-green' title='Success'></span>");
                 } else if (aData[1] === 1 || aData[1] === 2) {
-                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-time'></span>");
+                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-time' title='" + statusToMessageMap[aData[1]] + "'></span>");
                 } else if (aData[1] === 3 || aData[1] === 4 || aData[1] === 5) {
-                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-remove cross-red'></span>");
+                    $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-remove cross-red' title='" + statusToMessageMap[aData[1]] + "'></span>");
                 } else {
                     $("td:eq(1)", nRow).html("<span class='glyphicon glyphicon-warning-sign warning-yellow'></span>");
                 }

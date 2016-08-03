@@ -29,7 +29,19 @@ var result = (function() {
         window.location = "/index.html"
     };
     var updateResultOnScreen = function(data) {
-        if (data.data.programStatus === 6) {
+        if (data.data.programStatus === 0) {
+            sweetAlert({
+                title: "Program Not Found",
+                type: "error",
+                text: "No such program exists.",
+            }, redirectToHome.bind(this));
+        } else if (data.data.programStatus === 1 || data.data.programStatus === 2) {
+            sweetAlert({
+                title: "Program Submitted Successfully",
+                type: "info",
+                text: "Please check the program status after some time.",
+            }, redirectToHome.bind(this));
+        } else if (data.data.programStatus === 6) {
             sweetAlert({
                 title: "Success",
                 type: "success",
