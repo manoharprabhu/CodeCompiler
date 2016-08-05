@@ -36,7 +36,7 @@ var app = (function() {
         $programLanguage.trigger("change");
 
         programEditor.renderer.on("afterRender", function() {
-            setTimeout(function() { sweetAlert.close() }, 1000);
+            setTimeout(function() { sweetAlert.close(); }, 1000);
         });
     };
 
@@ -87,8 +87,6 @@ var app = (function() {
             setTimeout(function() { programSubmitFailure(); }, 1000);
         });
     };
-
-    initializeEditor();
 
     return {
         "initializeEditor": initializeEditor,

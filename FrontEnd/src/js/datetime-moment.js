@@ -51,7 +51,7 @@
         // Add sorting method - use an integer for the sorting
         types.order["moment-" + format + "-pre"] = function(d) {
             if (d && d.replace) {
-                d = d.replace(/<.*?>/g, '');
+                d = d.replace(/<.*?>/g, "");
             }
             return d === "" || d === null ?
                 -Infinity :

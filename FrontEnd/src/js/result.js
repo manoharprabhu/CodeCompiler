@@ -1,4 +1,4 @@
-/*global $ */
+/*global $, sweetAlert, CODECOMPILER_CONFIG */
 var result = (function() {
     var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);

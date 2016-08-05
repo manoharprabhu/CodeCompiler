@@ -1,4 +1,4 @@
-/*global $, moment, CODECOMPILER_CONFIG */
+/*global $, moment, CODECOMPILER_CONFIG, sweetAlert */
 var submissions = (function() {
     var statusToMessageMap = {
         1: "Program in queue",
