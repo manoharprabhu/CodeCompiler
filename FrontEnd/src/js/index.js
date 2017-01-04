@@ -25,7 +25,7 @@ var app = (function() {
             "text": "Please wait...",
             "showConfirmButton": false
         });
-        ace.config.set("basePath", "/js");
+        ace.config.set("basePath", "js");
         programEditor = ace.edit("program-editor");
         programEditor.setTheme("ace/theme/terminal");
         inputEditor = ace.edit("input-editor");
@@ -36,7 +36,7 @@ var app = (function() {
         $programLanguage.trigger("change");
 
         programEditor.renderer.on("afterRender", function() {
-            setTimeout(function() { sweetAlert.close(); }, 1000);
+            setTimeout(function() { sweetAlert.close() }, 1000);
         });
     };
 
@@ -48,7 +48,7 @@ var app = (function() {
             text: "Your program ID is <br /><strong>" + data.data.queueId + "</strong>",
             html: true
         }, function() {
-            window.location = "/result.html?queueId=" + data.data.queueId;
+            window.location = "result.html?queueId=" + data.data.queueId;
         });
     };
 
@@ -87,6 +87,8 @@ var app = (function() {
             setTimeout(function() { programSubmitFailure(); }, 1000);
         });
     };
+
+    initializeEditor();
 
     return {
         "initializeEditor": initializeEditor,

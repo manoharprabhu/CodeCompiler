@@ -1,4 +1,4 @@
-/*global $, sweetAlert, CODECOMPILER_CONFIG */
+/*global $ */
 var result = (function() {
     var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
@@ -21,7 +21,7 @@ var result = (function() {
     };
 
     var redirectToHome = function() {
-        window.location = "/index.html";
+        window.location = "index.html";
     };
     var updateResultOnScreen = function(data) {
         if (data.data.programStatus === 0) {
