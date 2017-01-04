@@ -25,7 +25,7 @@ var app = (function() {
             "text": "Please wait...",
             "showConfirmButton": false
         });
-        ace.config.set("basePath", "/js");
+        ace.config.set("basePath", "js");
         programEditor = ace.edit("program-editor");
         programEditor.setTheme("ace/theme/terminal");
         inputEditor = ace.edit("input-editor");
@@ -48,7 +48,7 @@ var app = (function() {
             text: "Your program ID is <br /><strong>" + data.data.queueId + "</strong>",
             html: true
         }, function() {
-            window.location = "/result.html?queueId=" + data.data.queueId;
+            window.location = "result.html?queueId=" + data.data.queueId;
         });
     };
 

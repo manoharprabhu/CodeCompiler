@@ -21,7 +21,7 @@ var result = (function() {
     };
 
     var redirectToHome = function() {
-        window.location = "/index.html";
+        window.location = "index.html";
     };
     var updateResultOnScreen = function(data) {
         if (data.data.programStatus === 0) {

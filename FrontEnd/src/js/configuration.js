@@ -1,6 +1,6 @@
 var CODECOMPILER_CONFIG = (function() {
-    var serverHost = "localhost";
-    var serverPort = "8081";
+    var serverHost = "10.95.105.180";
+    var serverPort = "8080";
     var serverSubmitEndpoint = "/codecompiler/submit";
     var serverProgramStatusEndpoint = "/codecompiler/status";
     var serverRecentSubmissionEndpoint = "/codecompiler/recent";

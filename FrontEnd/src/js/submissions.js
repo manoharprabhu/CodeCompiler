@@ -40,7 +40,7 @@ var submissions = (function() {
                 [2, "desc"]
             ],
             "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                var programResultPageURL = "/result.html?queueId=" + aData[0];
+                var programResultPageURL = "result.html?queueId=" + aData[0];
                 if (aData[1] === 6) {
                     $("td:eq(3)", nRow).html("<a href='" + programResultPageURL + "' class='valid-output'>View Result</a>");
                 } else if (aData[1] === 0 || aData[1] === 3 || aData[1] === 4 || aData[1] === 5) {
@@ -88,9 +88,9 @@ var submissions = (function() {
                     },
                     function(isConfirm) {
                         if (isConfirm) {
-                            window.location = "/submissions.html";
+                            window.location = "submissions.html";
                         } else {
-                            window.location = "/index.html";
+                            window.location = "index.html";
                         }
                     });
             });
