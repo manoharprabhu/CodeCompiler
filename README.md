@@ -16,6 +16,7 @@ A service to run code snippets and get output
 * MongoDB server
 * Java 7
 * GCC for compiling input C programs
+* nodejs for running javascript programs
 * Docker for running the containers
 
 #### Deploy all the services automatically on local system
@@ -24,6 +25,17 @@ A service to run code snippets and get output
 ````
 Build the endpoint and consumer JAR files, create docker images out of it, build the RMQ and MongoDB images, and start the containers with appropriate input parameters automatically.
 **NO_OF_INSTANCES_OF_CONSUMER** number of consumer containers will be started.
+
+#### Deploy the Frontend service
+Goto the Frontend project and edit the src/js/configuration.js file.
+Change the "serverHost" and "serverPort" property to point to the Endpoint properties.
+
+Goto the root of Frontend project and run the following
+````bash
+gulp minify
+````
+Deploy the contents of the "public" folder on a webserver.
+
 
 #### Usage
 For running the Endpoint service
