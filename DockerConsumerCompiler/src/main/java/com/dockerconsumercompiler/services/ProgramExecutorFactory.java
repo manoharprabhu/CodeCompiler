@@ -18,6 +18,7 @@ public class ProgramExecutorFactory {
     }
     
     public AbstractProgramExecutor getJSProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository, CommandExecutor commandExecutor) {
+        commandExecutor.setDefaultExecutor(new DefaultExecutor());
         return new JavascriptExecutor(message, programEntity, programRepository, commandExecutor);
     }
 }
