@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -16,16 +17,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommandExecutor {
 	private DefaultExecutor defaultExecutor;
-	private Logger logger = Logger.getLogger(CommandExecutor.class.getName());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public boolean isGccInstalled() {
 		try {
 			if (defaultExecutor.execute(new CommandLine("gcc").addArgument("-v")) != 0) {
-				logger.info("GCC is not installed");
+				logger.error("GCC is not installed");
 				return false;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Error while checking GCC version", e);
 			return false;
 		}
 		return true;
@@ -34,11 +35,11 @@ public class CommandExecutor {
 	public boolean isNodeInstalled() {
 		try {
 			if (defaultExecutor.execute(new CommandLine("node").addArgument("-v")) != 0) {
-				logger.info("node is not installed");
+				logger.error("node is not installed");
 				return false;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Error while checking nodejs version", e);
 			return false;
 		}
 		return true;
@@ -52,8 +53,7 @@ public class CommandExecutor {
 			try {
 				defaultExecutor.execute(makeDirectory);
 			} catch (IOException e) {
-				logger.info("Error while creating the temp directory");
-				e.printStackTrace();
+				logger.error("Error while creating the temp directory", e);
 				return false;
 			}
 		}
@@ -65,8 +65,7 @@ public class CommandExecutor {
 		try {
 			programWriter = new PrintWriter(queueId + File.separator + programName);
 		} catch (FileNotFoundException e) {
-			logger.info("Unable to open the program file");
-			e.printStackTrace();
+			logger.error("Unable to open the program file", e);
 			return false;
 		}
 		programWriter.write(programCode);
@@ -80,12 +79,11 @@ public class CommandExecutor {
 		try {
 			defaultExecutor.execute(compiler);
 		} catch (ExecuteException e) {
-			logger.info("Compilation was UNSUCCESSFUL");
+			logger.error("Compilation was UNSUCCESSFUL", e);
 			e.printStackTrace();
 			return false;
 		} catch (IOException e) {
-			logger.info("Unable to execute the command");
-			e.printStackTrace();
+			logger.error("Unable to execute the command", e);
 			return false;
 		}
 

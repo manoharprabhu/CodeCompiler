@@ -5,7 +5,8 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -31,7 +32,7 @@ import com.codecompiler.vo.Submission;
 @Service
 public class CodeCompilerService {
 
-	private Logger logger = Logger.getLogger(Logger.class.toString());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private ProgramRepository programRepository;
 	private RabbitTemplate rabbitTemplate;
 
@@ -58,9 +59,9 @@ public class CodeCompilerService {
 			rabbitTemplate.convertAndSend(RabbitMQConfiguration.QUEUE_NAME, uniqueId);
 			response = new ProgramSubmitResponse(uniqueId);
 		} catch (DataAccessResourceFailureException e) {
-			logger.info("Database seems to be down: " + e.getLocalizedMessage());
+			logger.error("Database seems to be down: ", e);
 		} catch (AmqpException e) {
-			logger.info("Messaging queue seems to be down: " + e.getLocalizedMessage());
+			logger.error("Messaging queue seems to be down: ", e);
 		}
 		return new Response<ProgramSubmitResponse>(response);
 	}
@@ -70,7 +71,7 @@ public class CodeCompilerService {
 		try {
 			programEntity = programRepository.findByQueueId(queueId);
 		} catch (DataAccessResourceFailureException e) {
-			logger.info("Database seems to be down: " + e.getLocalizedMessage());
+			logger.error("Database seems to be down: ", e);
 		}
 		ProgramStatusResponse response;
 		if (programEntity == null) {

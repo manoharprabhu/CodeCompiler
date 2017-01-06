@@ -5,7 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -25,7 +26,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
 	private ProgramRepository programRepository;
 	private CommandExecutor commandExecutor;
 	private static final String PROGRAM_NAME = "program";
-	private Logger logger = Logger.getLogger(CProgramExecutor.class.getName());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public CProgramExecutor(String message, ProgramEntity programEntity, ProgramRepository programRepository,
 			CommandExecutor commandExecutor) {
@@ -77,8 +78,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
 		try {
 			input = new ByteArrayInputStream(programEntity.getInput().getBytes("ISO-8859-1"));
 		} catch (UnsupportedEncodingException e) {
-			logger.info("Unable to pipe input into the program");
-			e.printStackTrace();
+			logger.error("Unable to pipe input into the program", e);
 			return false;
 		}
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -93,8 +93,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
 			this.updateProgramEntity(programEntity, null, output.toString(),
 					ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY, programRepository);
 		} catch (ExecuteException e) {
-			logger.info("Non-zero exit value. The program crashed \\ timedout");
-			e.printStackTrace();
+			logger.error("Non-zero exit value. The program crashed \\ timedout", e);
 			if (watchdog.killedProcess()) {
 				// Update database status code to PROGRAM_EXECUTION_TIMEOUT = 4;
 				this.updateProgramEntity(programEntity, Messages.DID_NOT_EXECUTE_IN_TIME, null,
@@ -106,7 +105,7 @@ public class CProgramExecutor extends AbstractProgramExecutor {
 			}
 			return false;
 		} catch (IOException e) {
-			logger.info("Program did not accept input");
+			logger.error("Program did not accept input", e);
 			this.updateProgramEntity(programEntity, null, output.toString(),
 					ProgramStatusResponse.PROGRAM_RAN_SUCCESSFULLY, programRepository);
 			return true;

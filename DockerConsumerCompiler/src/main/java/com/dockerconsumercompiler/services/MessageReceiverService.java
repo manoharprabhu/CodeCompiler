@@ -28,13 +28,16 @@ public class MessageReceiverService {
 		logger.info("Received message ID " + message + " from the producer");
 		ProgramEntity programEntity = programRepository.findByQueueId(message);
 		if (programEntity == null) {
+			logger.info("Program corresponding to the given queue ID does not exist.");
 			return;
 		}
 		AbstractProgramExecutor executor = null;
 		if ("c".equals(programEntity.getLanguage())) {
+			logger.info("Selected C executor");
 			executor = programExecutorFactory.getCProgramExecutor(message, programEntity, programRepository,
 					commandExecutor);
 		} else if ("js".equals(programEntity.getLanguage())) {
+			logger.info("Selected JS executor");
 			executor = programExecutorFactory.getJSProgramExecutor(message, programEntity, programRepository,
 					commandExecutor);
 		}
