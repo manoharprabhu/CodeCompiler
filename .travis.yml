@@ -1,5 +1,8 @@
 language: java
 
+addons:
+    srcclr: true
+
 jdk:
  - oraclejdk8
 
